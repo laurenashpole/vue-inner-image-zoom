@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "start": "vue-cli-service serve",
+    "build:demo": "vue-cli-service build --target app --dest public/dist public/src/index.js",
+    "build:lib": "vue-cli-service build --target lib --dest lib src/index.js",
+    "build:wc": "vue-cli-service build --target wc --dest wc src/InnerImageZoom/InnerImageZoom.vue",
+    "build": "npm run build:demo && npm run build:lib && npm run build:wc",
+    "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
