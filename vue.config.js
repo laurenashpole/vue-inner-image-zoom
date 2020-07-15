@@ -1,11 +1,12 @@
+const path = require('path');
+
 module.exports = {
   pages: {
     index: {
-      entry: 'public/src/index.js',
-      template: 'public/index.html',
-      filename: 'index.html',
-      title: 'vue-inner-image-zoom Demo',
-      chunks: ['chunk-vendors', 'chunk-common', 'index']
+      entry: 'demo/src/index.js'
     }
-  }
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'demo')
+  },
 }

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
-    "build:demo": "vue-cli-service build --target app --dest public/dist public/src/index.js",
+    "build:demo": "vue-cli-service build --target app --dest demo/dist demo/src/index.js",
     "build:lib": "vue-cli-service build --target lib --dest lib src/index.js",
     "build:wc": "vue-cli-service build --target wc --dest wc src/InnerImageZoom/InnerImageZoom.vue",
     "build": "npm run build:demo && npm run build:lib && npm run build:wc",
