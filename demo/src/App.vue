@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import InnerImageZoom from '../../src/InnerImageZoom'
-import '../../src/InnerImageZoom/styles.css'
+import InnerImageZoom from '../../src/InnerImageZoom';
+import '../../src/InnerImageZoom/styles.css';
 
 export default {
   name: 'App',

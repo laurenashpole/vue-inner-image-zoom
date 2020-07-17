@@ -1,22 +1,22 @@
-import { mount } from '@vue/test-utils'
-import { TEST_PROPS } from './constants'
-import InnerImageZoom from '@/InnerImageZoom'
-import '@/InnerImageZoom/styles.css'
+import { mount } from '@vue/test-utils';
+import { TEST_PROPS } from './constants';
+import InnerImageZoom from '@/InnerImageZoom';
+import '@/InnerImageZoom/styles.css';
 
 describe('InnerImageZoom', () => {
   const node = document.createElement('div');
 
   const innerImageZoom = (props = {}, attachToDoc) => {
     const testProps = {
-      propsData: {...props, src: TEST_PROPS.src}
+      propsData: { ...props, src: TEST_PROPS.src }
     };
 
     if (attachToDoc) {
       testProps.attachTo = node;
     }
 
-    return mount(InnerImageZoom, testProps)
-  }
+    return mount(InnerImageZoom, testProps);
+  };
 
   describe('mount', () => {
     describe('container', () => {
@@ -64,7 +64,9 @@ describe('InnerImageZoom', () => {
         const wrapper = innerImageZoom({ zoomSrc: TEST_PROPS.zoomSrc });
         const figure = wrapper.find('figure');
         await figure.trigger('mouseenter');
-        expect(figure.find('.iiz__zoom-img').attributes('src')).toEqual('https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?fit=crop&w=1000');
+        expect(figure.find('.iiz__zoom-img').attributes('src')).toEqual(
+          'https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?fit=crop&w=1000'
+        );
       });
     });
 
@@ -80,7 +82,9 @@ describe('InnerImageZoom', () => {
 
       it('renders the zoomed image in a fullscreen portal if fullscreenOnMobile is set', async () => {
         global.innerWidth = 500;
-        global.window.matchMedia = () => { return { matches: true }};
+        global.window.matchMedia = () => {
+          return { matches: true };
+        };
 
         const wrapper = innerImageZoom({ fullscreenOnMobile: true }, true);
         const figure = wrapper.find('figure');
