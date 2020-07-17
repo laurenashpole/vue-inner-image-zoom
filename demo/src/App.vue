@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <h1>vue-inner-image-zoom Demo</h1>
-    <InnerImageZoom src="/assets/unsplash.jpg" zoomSrc="/assets/unsplash-large.jpg" />
+    <inner-image-zoom
+      src="/assets/unsplash.jpg"
+      zoomSrc="/assets/unsplash-large.jpg"
+      :fullscreenOnMobile="true"
+    />
   </div>
 </template>
 
@@ -14,5 +18,5 @@ export default {
   components: {
     InnerImageZoom
   }
-}
+};
 </script>

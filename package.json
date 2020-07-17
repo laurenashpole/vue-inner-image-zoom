@@ -12,6 +12,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@linusborg/vue-simple-portal": "^0.1.4",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
