@@ -1,18 +1,25 @@
 {
   "name": "vue-inner-image-zoom",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.0",
+  "description": "A Vue.js component for magnifying an image within its original container.",
+  "main": "lib/vue-inner-image-zoom.umd.js",
+  "unpkg": "lib/vue-inner-image-zoom.common.js",
+  "files": [
+    "lib/*.css",
+    "lib/*.js",
+    "lib/*.map"
+  ],
   "scripts": {
     "start": "vue-cli-service serve",
     "build:demo": "vue-cli-service build --target app --dest demo/dist demo/src/index.js",
-    "build:lib": "vue-cli-service build --target lib --dest lib src/index.js",
-    "build:wc": "vue-cli-service build --target wc --dest wc src/InnerImageZoom/InnerImageZoom.vue",
-    "build": "npm run build:lib && npm run build:wc",
+    "build": "vue-cli-service build --target lib --dest lib src/index.js",
     "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@linusborg/vue-simple-portal": "^0.1.4",
+    "@linusborg/vue-simple-portal": "^0.1.4"
+  },
+  "peerDependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
@@ -29,5 +36,27 @@
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.0.5",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "author": "Lauren Ashpole",
+  "homepage": "https://github.com/laurenashpole/vue-inner-image-zoom#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laurenashpole/vue-inner-image-zoom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/laurenashpole/vue-inner-image-zoom/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue-component",
+    "magnify",
+    "zoom",
+    "enlarge",
+    "image",
+    "responsive",
+    "photo",
+    "pdp",
+    "ecommerce"
+  ]
 }

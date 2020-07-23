@@ -4,7 +4,7 @@
     ref="img"
     v-bind:class="{
       [className]: className,
-      'iis--drag': this.currentMoveType === 'drag'
+      'iiz--drag': this.currentMoveType === 'drag'
     }"
     v-on="{
       touchstart: handleTouchStart,
