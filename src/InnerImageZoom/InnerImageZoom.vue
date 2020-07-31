@@ -354,7 +354,6 @@ export default {
       }
     },
     zoomOut(callback) {
-      console.log('is this happening');
       this.isZoomed = false;
 
       if (this.afterZoomOut) {
