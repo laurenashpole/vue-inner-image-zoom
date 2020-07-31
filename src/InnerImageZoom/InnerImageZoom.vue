@@ -58,7 +58,7 @@
 
     <template v-if="isActive">
       <template v-if="isFullscreen">
-        <MountingPortal to="body" append>
+        <MountingPortal mount-to="body" name="iizPortal" append>
           <div class="iiz__zoom-portal">
             <img
               class="iiz__zoom-img"
@@ -134,12 +134,12 @@
       </template>
     </template>
 
-    <span v-if="!isZoomed" className="iiz__btn iiz__hint"></span>
+    <span v-if="!isZoomed" class="iiz__btn iiz__hint"></span>
   </figure>
 </template>
 
 <script>
-import { MountingPortal } from 'vue-portal';
+import { MountingPortal } from 'portal-vue';
 
 export default {
   name: 'InnerImageZoom',
@@ -354,6 +354,7 @@ export default {
       }
     },
     zoomOut(callback) {
+      console.log('is this happening');
       this.isZoomed = false;
 
       if (this.afterZoomOut) {
