@@ -23,10 +23,10 @@
         <li>
           Photo credit:
           <a
-            href="https://unsplash.com/photos/AtuwyYScdyc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            href="https://unsplash.com/photos/TVllFyGaLEA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
             target="_blank"
             rel="noopener noreferrer"
-            >Daniel Korpai</a
+            >STIL</a
           >
           on
           <a
