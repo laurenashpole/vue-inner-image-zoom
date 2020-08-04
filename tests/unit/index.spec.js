@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { TEST_PROPS } from './constants';
 import InnerImageZoom from '@/InnerImageZoom';
-import '@/InnerImageZoom/styles.css';
 
 describe('InnerImageZoom', () => {
   const node = document.createElement('div');
@@ -17,6 +16,19 @@ describe('InnerImageZoom', () => {
 
     return mount(InnerImageZoom, testProps);
   };
+
+  beforeEach(() => {
+    Element.prototype.getBoundingClientRect = jest.fn(() => {
+      return {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0
+      }
+    });
+  });
 
   describe('mount', () => {
     describe('container', () => {
@@ -91,23 +103,36 @@ describe('InnerImageZoom', () => {
         await figure.trigger('touchstart');
         await figure.trigger('mouseenter');
         await figure.trigger('click', { pageX: 100, pageY: 100 });
-        expect(document.querySelector('.iiz__zoom-portal').exists()).toEqual(true);
+        expect(!!document.querySelector('.iiz__zoom-portal')).toEqual(true);
       });
     });
   });
 
   describe('move', () => {
-    it('pans the zoomed image on mouse move', async () => {
+    it('pans the zoomed image on figure mouse move', async () => {
       const wrapper = innerImageZoom({ zoomSrc: TEST_PROPS.zoomSrc });
       const figure = wrapper.find('figure');
       await figure.trigger('mouseenter');
       await figure.trigger('click', { pageX: 100, pageY: 100 });
       const zoomImg = figure.find('.iiz__zoom-img');
       await zoomImg.trigger('load');
-      const topPos = zoomImg.attributes().style.top;
+      const topPos = zoomImg.element.style.top;
       await figure.trigger('mousemove', { pageX: 150, pageY: 150 });
-      const updatedTopPos = zoomImg.attributes().style.top;
+      const updatedTopPos = zoomImg.element.style.top;
       expect(parseInt(topPos, 10) === parseInt(updatedTopPos, 10)).toEqual(false);
+    });
+
+    it('ignores figure mouse move if moveType is drag', async () => {
+      const wrapper = innerImageZoom({ zoomSrc: TEST_PROPS.zoomSrc, moveType: 'drag' });
+      const figure = wrapper.find('figure');
+      await figure.trigger('mouseenter');
+      await figure.trigger('click', { pageX: 100, pageY: 100 });
+      const zoomImg = figure.find('.iiz__zoom-img');
+      await zoomImg.trigger('load');
+      const topPos = zoomImg.element.style.top;
+      await figure.trigger('mousemove', { pageX: 150, pageY: 150 });
+      const updatedTopPos = zoomImg.element.style.top;
+      expect(parseInt(topPos, 10) === parseInt(updatedTopPos, 10)).toEqual(true);
     });
   });
 

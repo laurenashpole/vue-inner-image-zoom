@@ -252,6 +252,7 @@ export default {
         this.imgProps.zoomImg.offsetLeft,
         this.imgProps.zoomImg.offsetTop
       );
+
       this.imgProps.zoomImg.addEventListener(
         this.isTouch ? 'touchmove' : 'mousemove',
         this.handleDragMove,
