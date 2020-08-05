@@ -39,7 +39,7 @@ import InnerImageZoom from 'vue-inner-image-zoom';
 
 export default {
   components: {
-    'InnerImageZoom'
+    'inner-image-zoom': InnerImageZoom
   }
 }
 
