@@ -12,6 +12,6 @@ cd dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:laurenashpole/vue-inner-image-zoom.git gh-pages-source:gh-pages
+git push -f git@github.com:laurenashpole/vue-inner-image-zoom.git master:gh-pages
 
 cd -

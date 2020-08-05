@@ -2,8 +2,8 @@
   <section class="product">
     <div class="product__img">
       <InnerImageZoom
-        src="/assets/unsplash-1.jpg"
-        zoomSrc="/assets/unsplash-1-large.jpg"
+        src="assets/unsplash-1.jpg"
+        zoomSrc="assets/unsplash-1-large.jpg"
         alt="Product details page style zoomable image"
       />
     </div>
