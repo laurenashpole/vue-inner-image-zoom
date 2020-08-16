@@ -2,12 +2,12 @@
   <nav class="nav">
     <ul class="nav__list nav__list--secondary">
       <li class="nav__item">
-        <a class="nav__link" href="https://github.com/laurenashpole/react-inner-image-zoom"
+        <a class="nav__link" href="https://github.com/laurenashpole/vue-inner-image-zoom"
           >Github
         </a>
       </li>
       <li class="nav__item">
-        <a class="nav__link" href="https://www.npmjs.com/package/react-inner-image-zoom">NPM</a>
+        <a class="nav__link" href="https://www.npmjs.com/package/vue-inner-image-zoom">NPM</a>
       </li>
       <li class="nav__item">
         <a class="nav__link" href="https://laurenashpole.github.io/react-inner-image-zoom"
