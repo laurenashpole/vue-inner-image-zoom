@@ -12,8 +12,8 @@
     <div>
       <h2>Drag Example</h2>
       <inner-image-zoom
-        src="/assets/unsplash.jpg"
-        zoomSrc="/assets/unsplash-large.jpg"
+        src="/assets/unsplash2.jpg"
+        zoomSrc="/assets/unsplash2-large.jpg"
         moveType="drag"
         :fullscreenOnMobile="true"
       />
