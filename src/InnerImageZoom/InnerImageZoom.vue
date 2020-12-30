@@ -83,6 +83,7 @@
 
             <button
               v-if="this.isTouch"
+              type="button"
               class="iiz__btn iiz__close"
               aria-label="Zoom Out"
               v-bind:class="{ 'iiz__close--visible': isZoomed }"
@@ -91,7 +92,7 @@
                   this.isFullscreen ? 0 : fadeDuration
                 }ms visibility`
               }"
-              v-on:click="handleClose"
+              v-on:click.stop="handleClose"
             />
           </div>
         </MountingPortal>
@@ -122,6 +123,7 @@
         <button
           v-if="this.isTouch"
           class="iiz__btn iiz__close"
+          type="button"
           aria-label="Zoom Out"
           v-bind:class="{ 'iiz__close--visible': isZoomed }"
           v-bind:style="{
@@ -129,7 +131,7 @@
               this.isFullscreen ? 0 : fadeDuration
             }ms visibility`
           }"
-          v-on:click="handleClose"
+          v-on:click.stop="handleClose"
         />
       </template>
     </template>
