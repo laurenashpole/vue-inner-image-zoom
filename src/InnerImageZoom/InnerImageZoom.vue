@@ -7,7 +7,7 @@
       'iiz--drag': this.currentMoveType === 'drag'
     }"
     v-on="{
-      touchstart: handleTouchStart,
+      touchstart: isZoomed ? () => {} : handleTouchStart,
       click: handleClick,
       mouseenter: isTouch ? () => {} : handleMouseEnter,
       mousemove: currentMoveType === 'drag' || !isZoomed ? () => {} : handleMouseMove,
@@ -161,6 +161,7 @@ export default {
     sizes: String,
     sources: Array,
     zoomSrc: String,
+    zoomPreload: Boolean,
     alt: String,
     fadeDuration: {
       type: Number,
@@ -177,7 +178,7 @@ export default {
   },
   data() {
     return {
-      isActive: false,
+      isActive: this.zoomPreload || false,
       isTouch: false,
       isZoomed: false,
       isFullscreen: false,

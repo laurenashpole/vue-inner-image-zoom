@@ -80,6 +80,11 @@ describe('InnerImageZoom', () => {
           'https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?fit=crop&w=1000'
         );
       });
+
+      it('renders the zoomed image on render if zoomPreload is true', () => {
+        const wrapper = innerImageZoom({ zoomSrc: TEST_PROPS.zoomSrc, zoomPreload: true });
+        expect(wrapper.find('.iiz__zoom-img').exists()).toEqual(true);
+      });
     });
 
     describe('show', () => {
