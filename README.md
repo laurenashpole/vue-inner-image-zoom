@@ -59,6 +59,9 @@ src | String | | (Required) URL for the original image.
 srcSet | String | | Default srcset attribute for a responsive original image.
 sizes | String | | Default sizes attribute for use with srcset.
 sources | Array | | A list of image sources for using the picture tag to serve the appropriate original image (see below for more details).
+width | Number | | Width attribute for original image.
+height | Number | | Height attribute for original image.
+hasSpacer | Boolean | false | If true, gets the original image's aspect ratio based on the width and height props and creates a spacer to prevent cumulative layout shift.
 zoomSrc | String | | URL for the larger zoom image. Falls back to original image src if not defined.
 zoomPreload | Boolean | false | If set to true, preloads the zoom image instead of waiting for mouseenter.
 alt | String | | Alternative text for the original image.

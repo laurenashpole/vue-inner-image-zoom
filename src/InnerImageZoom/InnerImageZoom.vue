@@ -6,6 +6,9 @@
       [className]: className,
       'iiz--drag': this.currentMoveType === 'drag'
     }"
+    v-bind:style="{
+      width: `${width}px`
+    }"
     v-on="{
       touchstart: isZoomed ? () => {} : handleTouchStart,
       click: handleClick,
@@ -14,19 +17,41 @@
       mouseleave: isTouch ? () => {} : handleMouseLeave
     }"
   >
-    <template v-if="validSources">
-      <picture>
-        <source
-          v-for="(source, i) in validSources"
-          v-bind:key="i"
-          v-bind:srcSet="source.srcSet"
-          v-bind:sizes="source.sizes"
-          v-bind:media="source.media"
-          v-bind:type="source.type"
-        />
+    <div
+      v-bind:style="{
+        paddingTop: createSpacer ? `${(height / width) * 100}%` : null
+      }"
+    >
+      <template v-if="validSources">
+        <picture>
+          <source
+            v-for="(source, i) in validSources"
+            v-bind:key="i"
+            v-bind:srcSet="source.srcSet"
+            v-bind:sizes="source.sizes"
+            v-bind:media="source.media"
+            v-bind:type="source.type"
+          />
+          <img
+            class="iiz__img"
+            v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
+            v-bind:style="{
+              transition: `linear 0ms opacity ${
+                isZoomed ? fadeDuration : 0
+              }ms, linear 0ms visibility ${isZoomed ? fadeDuration : 0}ms`
+            }"
+            v-bind:src="src"
+            v-bind:srcSet="srcSet"
+            v-bind:sizes="sizes"
+            v-bind:alt="alt"
+          />
+        </picture>
+      </template>
+
+      <template v-else>
         <img
           class="iiz__img"
-          v-bind:class="{ 'iiz__img--invisible': isZoomed }"
+          v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
           v-bind:style="{
             transition: `linear 0ms opacity ${
               isZoomed ? fadeDuration : 0
@@ -37,24 +62,8 @@
           v-bind:sizes="sizes"
           v-bind:alt="alt"
         />
-      </picture>
-    </template>
-
-    <template v-else>
-      <img
-        class="iiz__img"
-        v-bind:class="{ 'iiz__img--invisible': isZoomed }"
-        v-bind:style="{
-          transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
-            isZoomed ? fadeDuration : 0
-          }ms`
-        }"
-        v-bind:src="src"
-        v-bind:srcSet="srcSet"
-        v-bind:sizes="sizes"
-        v-bind:alt="alt"
-      />
-    </template>
+      </template>
+    </div>
 
     <template v-if="isActive">
       <template v-if="isFullscreen">
@@ -160,6 +169,9 @@ export default {
     srcSet: String,
     sizes: String,
     sources: Array,
+    width: Number,
+    height: Number,
+    hasSpacer: Boolean,
     zoomSrc: String,
     zoomPreload: Boolean,
     alt: String,
@@ -195,6 +207,9 @@ export default {
   computed: {
     validSources: function () {
       return this.sources ? this.sources.filter((source) => source.srcSet) : [];
+    },
+    createSpacer: function () {
+      return this.width && this.height && this.hasSpacer;
     }
   },
   methods: {
@@ -430,9 +445,18 @@ function getRatios(bounds, zoomImg) {
   opacity: 1;
 }
 
-.iiz__img--invisible {
+.iiz__img--hidden {
   visibility: hidden;
   opacity: 0;
+}
+
+.iiz__img--abs {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
 }
 
 .iiz__zoom-img {

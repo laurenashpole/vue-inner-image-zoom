@@ -60,6 +60,16 @@ describe('InnerImageZoom', () => {
         const sources = wrapper.findAll('source').wrappers;
         expect(sources.length).toEqual(1);
       });
+
+      it('renders an image spacer if width, height, and hasSpacer are set', () => {
+        const wrapper = innerImageZoom({ width: 750, height: 500, hasSpacer: true });
+        expect(wrapper.find('div').element.style['padding-top']).toEqual('66.66666666666666%');
+      });
+
+      it('ignores hasSpacer if width or height are not set', () => {
+        const wrapper = innerImageZoom({ height: 500, hasSpacer: true });
+        expect(wrapper.find('div').element.style['padding-top']).toEqual('');
+      });
     });
   });
 
