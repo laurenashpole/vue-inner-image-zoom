@@ -4,7 +4,7 @@
     ref="img"
     v-bind:class="{
       [className]: className,
-      'iiz--drag': this.currentMoveType === 'drag'
+      'iiz--drag': currentMoveType === 'drag'
     }"
     v-bind:style="{
       width: `${width}px`
@@ -72,12 +72,13 @@
             <img
               class="iiz__zoom-img"
               alt=""
+              draggable="false"
               v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
               v-bind:style="{
                 top: `${top}px`,
                 left: `${left}px`,
-                transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-                  this.isFullscreen ? 0 : fadeDuration
+                transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+                  isFullscreen ? 0 : fadeDuration
                 }ms visibility`
               }"
               v-bind:src="zoomSrc || src"
@@ -86,19 +87,20 @@
                 touchstart: handleDragStart,
                 touchend: handleDragEnd,
                 mousedown: handleDragStart,
-                mouseup: handleDragEnd
+                mouseup: handleDragEnd,
+                click: handleClick
               }"
             />
 
             <button
-              v-if="this.isTouch"
+              v-if="isTouch && !hideCloseButton"
               type="button"
               class="iiz__btn iiz__close"
               aria-label="Zoom Out"
               v-bind:class="{ 'iiz__close--visible': isZoomed }"
               v-bind:style="{
-                transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-                  this.isFullscreen ? 0 : fadeDuration
+                transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+                  isFullscreen ? 0 : fadeDuration
                 }ms visibility`
               }"
               v-on:click.stop="handleClose"
@@ -111,12 +113,13 @@
         <img
           class="iiz__zoom-img"
           alt=""
+          draggable="false"
           v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
           v-bind:style="{
             top: `${top}px`,
             left: `${left}px`,
-            transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-              this.isFullscreen ? 0 : fadeDuration
+            transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+              isFullscreen ? 0 : fadeDuration
             }ms visibility`
           }"
           v-bind:src="zoomSrc || src"
@@ -130,14 +133,14 @@
         />
 
         <button
-          v-if="this.isTouch"
+          v-if="isTouch && !hideCloseButton"
           class="iiz__btn iiz__close"
           type="button"
           aria-label="Zoom Out"
           v-bind:class="{ 'iiz__close--visible': isZoomed }"
           v-bind:style="{
-            transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-              this.isFullscreen ? 0 : fadeDuration
+            transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+              isFullscreen ? 0 : fadeDuration
             }ms visibility`
           }"
           v-on:click.stop="handleClose"
@@ -145,7 +148,7 @@
       </template>
     </template>
 
-    <span v-if="!isZoomed" class="iiz__btn iiz__hint"></span>
+    <span v-if="!isZoomed && !hideHint" class="iiz__btn iiz__hint"></span>
   </figure>
 </template>
 
@@ -184,6 +187,8 @@ export default {
       type: Number,
       default: 640
     },
+    hideHint: Boolean,
+    hideCloseButton: Boolean,
     className: String,
     afterZoomIn: Function,
     afterZoomOut: Function
@@ -226,8 +231,10 @@ export default {
     },
     handleClick(e) {
       if (this.isZoomed) {
-        if (!this.isTouch && !this.isDragging) {
-          this.zoomOut();
+        if (this.isTouch) {
+          this.hideCloseButton && this.handleClose();
+        } else {
+          !this.isDragging && this.zoomOut();
         }
 
         return;
@@ -425,6 +432,7 @@ function getRatios(bounds, zoomImg) {
 
 <style scoped>
 .iiz {
+  max-width: 100%;
   margin: 0;
   position: relative;
   overflow: hidden;

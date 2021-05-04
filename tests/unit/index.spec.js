@@ -70,6 +70,11 @@ describe('InnerImageZoom', () => {
         const wrapper = innerImageZoom({ height: 500, hasSpacer: true });
         expect(wrapper.find('div').element.style['padding-top']).toEqual('');
       });
+
+      it('hides the magnifying glass hint if hideHint is true', () => {
+        const wrapper = innerImageZoom({ hideHint: true });
+        expect(wrapper.find('span').exists()).toEqual(false);
+      });
     });
   });
 
@@ -186,6 +191,21 @@ describe('InnerImageZoom', () => {
       await figure.trigger('mouseenter');
       await figure.trigger('click', { pageX: 100, pageY: 100 });
       await figure.trigger('mouseleave');
+
+      setTimeout(() => {
+        expect(figure.find('.iiz__zoom-img').exists()).toEqual(false);
+        done();
+      }, 150);
+    });
+
+    it('hides the zoomed image on click on touch devices if hideCloseButton is true', async (done) => {
+      const wrapper = innerImageZoom({ hideCloseButton: true });
+      const figure = wrapper.find('figure');
+      await figure.trigger('touchstart');
+      await figure.trigger('mouseenter');
+      await figure.trigger('click', { pageX: 100, pageY: 100 });
+      await figure.find('.iiz__zoom-img').trigger('load');
+      await figure.trigger('click', { pageX: 100, pageY: 100 });
 
       setTimeout(() => {
         expect(figure.find('.iiz__zoom-img').exists()).toEqual(false);

@@ -18,6 +18,8 @@
         src="/assets/unsplash.jpg"
         zoomSrc="/assets/unsplash-large.jpg"
         :fullscreenOnMobile="true"
+        :hideCloseButton="true"
+        :hideHint="true"
       />
     </div>
     <div style="margin-bottom: 30px;">
