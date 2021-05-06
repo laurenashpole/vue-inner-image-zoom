@@ -115,9 +115,9 @@
             load: handleLoad,
             touchstart: handleDragStart,
             touchend: handleDragEnd,
-            mousedown: handleDragStart,
             mouseup: handleDragEnd
           }"
+          v-on:mousedown.prevent="handleDragStart"
         />
 
         <button
