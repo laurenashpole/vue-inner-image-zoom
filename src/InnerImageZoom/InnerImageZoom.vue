@@ -176,6 +176,10 @@ export default {
     height: Number,
     hasSpacer: Boolean,
     zoomSrc: String,
+    zoomScale: {
+      type: Number,
+      default: 1
+    },
     zoomPreload: Boolean,
     alt: String,
     fadeDuration: {
@@ -244,15 +248,22 @@ export default {
         this.isActive = true;
       }
 
-      if (this.imgProps.isLoaded) {
+      if (this.imgProps.zoomImg) {
         this.zoomIn(e.pageX, e.pageY);
       } else {
         this.imgProps.onLoadCallback = this.zoomIn.bind(this, e.pageX, e.pageY);
       }
     },
     handleLoad(e) {
-      this.imgProps.isLoaded = true;
       this.imgProps.zoomImg = e.target;
+      this.imgProps.zoomImg.setAttribute(
+        'width',
+        this.imgProps.zoomImg.naturalWidth * this.zoomScale
+      );
+      this.imgProps.zoomImg.setAttribute(
+        'height',
+        this.imgProps.zoomImg.naturalHeight * this.zoomScale
+      );
       this.imgProps.bounds = getBounds(this.$refs.img, false);
       this.imgProps.ratios = getRatios(this.imgProps.bounds, this.imgProps.zoomImg);
 
@@ -391,7 +402,6 @@ export default {
       }
     },
     setDefaults() {
-      this.imgProps.isLoaded = false;
       this.imgProps.onLoadCallback = null;
       this.imgProps.zoomImg = null;
       this.imgProps.bounds = {};

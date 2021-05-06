@@ -10,6 +10,7 @@
         :width="750"
         :height="500"
         :hasSpacer="true"
+        :zoomScale="0.9"
       />
     </div>
     <div style="margin-bottom: 30px;">
