@@ -165,6 +165,10 @@ export default {
       type: String,
       default: 'pan'
     },
+    zoomType: {
+      type: String,
+      default: 'click'
+    },
     src: {
       type: String,
       required: true
@@ -222,8 +226,9 @@ export default {
     }
   },
   methods: {
-    handleMouseEnter() {
+    handleMouseEnter(e) {
       this.isActive = true;
+      this.zoomType === 'hover' && !this.isZoomed && this.handleClick(e);
     },
     handleTouchStart() {
       this.isFullscreen =

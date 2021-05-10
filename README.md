@@ -67,6 +67,7 @@ zoomScale | Number | 1 | Multiplied against the natural width and height of the 
 zoomPreload | Boolean | false | If set to true, preloads the zoom image instead of waiting for mouseenter.
 alt | String | | Alternative text for the original image.
 moveType | String | pan | `pan` or `drag`. The user behavior for moving zoomed images on non-touch devices.
+zoomType | String | click | `click` or `hover`. The zoom behavior for images.
 fadeDuration | Number | 150 | Fade transition time in milliseconds. If zooming in on transparent images, set this to `0` for best results.
 fullscreenOnMobile | Boolean | false | Enables fullscreen zoomed image on touch devices below a specified breakpoint.
 mobileBreakpoint | Number | 640 | The maximum breakpoint for fullscreen zoom image when fullscreenOnMobile is true.

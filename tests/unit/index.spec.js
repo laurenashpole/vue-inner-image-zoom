@@ -112,6 +112,14 @@ describe('InnerImageZoom', () => {
         expect(figure.find('.iiz__zoom-img--visible').exists()).toEqual(true);
       });
 
+      it('makes the zoomed image visible on mouse enter if zoomType hover is set', async () => {
+        const wrapper = innerImageZoom({ zoomType: 'hover' });
+        const figure = wrapper.find('figure');
+        await figure.trigger('mouseenter');
+        await figure.find('.iiz__zoom-img').trigger('load');
+        expect(figure.find('.iiz__zoom-img--visible').exists()).toEqual(true);
+      });
+
       it('renders the zoomed image in a fullscreen portal if fullscreenOnMobile is set', async () => {
         global.innerWidth = 500;
         global.window.matchMedia = () => {
