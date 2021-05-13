@@ -60,6 +60,21 @@ describe('InnerImageZoom', () => {
         const sources = wrapper.findAll('source').wrappers;
         expect(sources.length).toEqual(1);
       });
+
+      it('renders an image spacer if width, height, and hasSpacer are set', () => {
+        const wrapper = innerImageZoom({ width: 750, height: 500, hasSpacer: true });
+        expect(wrapper.find('div').element.style['padding-top']).toEqual('66.66666666666666%');
+      });
+
+      it('ignores hasSpacer if width or height are not set', () => {
+        const wrapper = innerImageZoom({ height: 500, hasSpacer: true });
+        expect(wrapper.find('div').element.style['padding-top']).toEqual('');
+      });
+
+      it('hides the magnifying glass hint if hideHint is true', () => {
+        const wrapper = innerImageZoom({ hideHint: true });
+        expect(wrapper.find('span').exists()).toEqual(false);
+      });
     });
   });
 
@@ -80,6 +95,11 @@ describe('InnerImageZoom', () => {
           'https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?fit=crop&w=1000'
         );
       });
+
+      it('renders the zoomed image on render if zoomPreload is true', () => {
+        const wrapper = innerImageZoom({ zoomSrc: TEST_PROPS.zoomSrc, zoomPreload: true });
+        expect(wrapper.find('.iiz__zoom-img').exists()).toEqual(true);
+      });
     });
 
     describe('show', () => {
@@ -88,6 +108,14 @@ describe('InnerImageZoom', () => {
         const figure = wrapper.find('figure');
         await figure.trigger('mouseenter');
         await figure.trigger('click', { pageX: 100, pageY: 100 });
+        await figure.find('.iiz__zoom-img').trigger('load');
+        expect(figure.find('.iiz__zoom-img--visible').exists()).toEqual(true);
+      });
+
+      it('makes the zoomed image visible on mouse enter if zoomType hover is set', async () => {
+        const wrapper = innerImageZoom({ zoomType: 'hover' });
+        const figure = wrapper.find('figure');
+        await figure.trigger('mouseenter');
         await figure.find('.iiz__zoom-img').trigger('load');
         expect(figure.find('.iiz__zoom-img--visible').exists()).toEqual(true);
       });
@@ -171,6 +199,21 @@ describe('InnerImageZoom', () => {
       await figure.trigger('mouseenter');
       await figure.trigger('click', { pageX: 100, pageY: 100 });
       await figure.trigger('mouseleave');
+
+      setTimeout(() => {
+        expect(figure.find('.iiz__zoom-img').exists()).toEqual(false);
+        done();
+      }, 150);
+    });
+
+    it('hides the zoomed image on click on touch devices if hideCloseButton is true', async (done) => {
+      const wrapper = innerImageZoom({ hideCloseButton: true });
+      const figure = wrapper.find('figure');
+      await figure.trigger('touchstart');
+      await figure.trigger('mouseenter');
+      await figure.trigger('click', { pageX: 100, pageY: 100 });
+      await figure.find('.iiz__zoom-img').trigger('load');
+      await figure.trigger('click', { pageX: 100, pageY: 100 });
 
       setTimeout(() => {
         expect(figure.find('.iiz__zoom-img').exists()).toEqual(false);

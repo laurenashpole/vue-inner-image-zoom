@@ -4,29 +4,54 @@
     ref="img"
     v-bind:class="{
       [className]: className,
-      'iiz--drag': this.currentMoveType === 'drag'
+      'iiz--drag': currentMoveType === 'drag'
+    }"
+    v-bind:style="{
+      width: `${width}px`
     }"
     v-on="{
-      touchstart: handleTouchStart,
+      touchstart: isZoomed ? () => {} : handleTouchStart,
       click: handleClick,
       mouseenter: isTouch ? () => {} : handleMouseEnter,
       mousemove: currentMoveType === 'drag' || !isZoomed ? () => {} : handleMouseMove,
       mouseleave: isTouch ? () => {} : handleMouseLeave
     }"
   >
-    <template v-if="validSources">
-      <picture>
-        <source
-          v-for="(source, i) in validSources"
-          v-bind:key="i"
-          v-bind:srcSet="source.srcSet"
-          v-bind:sizes="source.sizes"
-          v-bind:media="source.media"
-          v-bind:type="source.type"
-        />
+    <div
+      v-bind:style="{
+        paddingTop: createSpacer ? `${(height / width) * 100}%` : null
+      }"
+    >
+      <template v-if="validSources">
+        <picture>
+          <source
+            v-for="(source, i) in validSources"
+            v-bind:key="i"
+            v-bind:srcSet="source.srcSet"
+            v-bind:sizes="source.sizes"
+            v-bind:media="source.media"
+            v-bind:type="source.type"
+          />
+          <img
+            class="iiz__img"
+            v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
+            v-bind:style="{
+              transition: `linear 0ms opacity ${
+                isZoomed ? fadeDuration : 0
+              }ms, linear 0ms visibility ${isZoomed ? fadeDuration : 0}ms`
+            }"
+            v-bind:src="src"
+            v-bind:srcSet="srcSet"
+            v-bind:sizes="sizes"
+            v-bind:alt="alt"
+          />
+        </picture>
+      </template>
+
+      <template v-else>
         <img
           class="iiz__img"
-          v-bind:class="{ 'iiz__img--invisible': isZoomed }"
+          v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
           v-bind:style="{
             transition: `linear 0ms opacity ${
               isZoomed ? fadeDuration : 0
@@ -37,24 +62,8 @@
           v-bind:sizes="sizes"
           v-bind:alt="alt"
         />
-      </picture>
-    </template>
-
-    <template v-else>
-      <img
-        class="iiz__img"
-        v-bind:class="{ 'iiz__img--invisible': isZoomed }"
-        v-bind:style="{
-          transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
-            isZoomed ? fadeDuration : 0
-          }ms`
-        }"
-        v-bind:src="src"
-        v-bind:srcSet="srcSet"
-        v-bind:sizes="sizes"
-        v-bind:alt="alt"
-      />
-    </template>
+      </template>
+    </div>
 
     <template v-if="isActive">
       <template v-if="isFullscreen">
@@ -63,12 +72,13 @@
             <img
               class="iiz__zoom-img"
               alt=""
+              draggable="false"
               v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
               v-bind:style="{
                 top: `${top}px`,
                 left: `${left}px`,
-                transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-                  this.isFullscreen ? 0 : fadeDuration
+                transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+                  isFullscreen ? 0 : fadeDuration
                 }ms visibility`
               }"
               v-bind:src="zoomSrc || src"
@@ -77,19 +87,20 @@
                 touchstart: handleDragStart,
                 touchend: handleDragEnd,
                 mousedown: handleDragStart,
-                mouseup: handleDragEnd
+                mouseup: handleDragEnd,
+                click: handleClick
               }"
             />
 
             <button
-              v-if="this.isTouch"
+              v-if="isTouch && !hideCloseButton"
               type="button"
               class="iiz__btn iiz__close"
               aria-label="Zoom Out"
               v-bind:class="{ 'iiz__close--visible': isZoomed }"
               v-bind:style="{
-                transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-                  this.isFullscreen ? 0 : fadeDuration
+                transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+                  isFullscreen ? 0 : fadeDuration
                 }ms visibility`
               }"
               v-on:click.stop="handleClose"
@@ -102,12 +113,13 @@
         <img
           class="iiz__zoom-img"
           alt=""
+          draggable="false"
           v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
           v-bind:style="{
             top: `${top}px`,
             left: `${left}px`,
-            transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-              this.isFullscreen ? 0 : fadeDuration
+            transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+              isFullscreen ? 0 : fadeDuration
             }ms visibility`
           }"
           v-bind:src="zoomSrc || src"
@@ -121,14 +133,14 @@
         />
 
         <button
-          v-if="this.isTouch"
+          v-if="isTouch && !hideCloseButton"
           class="iiz__btn iiz__close"
           type="button"
           aria-label="Zoom Out"
           v-bind:class="{ 'iiz__close--visible': isZoomed }"
           v-bind:style="{
-            transition: `linear ${this.isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
-              this.isFullscreen ? 0 : fadeDuration
+            transition: `linear ${isFullscreen ? 0 : fadeDuration}ms opacity, linear ${
+              isFullscreen ? 0 : fadeDuration
             }ms visibility`
           }"
           v-on:click.stop="handleClose"
@@ -136,7 +148,7 @@
       </template>
     </template>
 
-    <span v-if="!isZoomed" class="iiz__btn iiz__hint"></span>
+    <span v-if="!isZoomed && !hideHint" class="iiz__btn iiz__hint"></span>
   </figure>
 </template>
 
@@ -153,6 +165,10 @@ export default {
       type: String,
       default: 'pan'
     },
+    zoomType: {
+      type: String,
+      default: 'click'
+    },
     src: {
       type: String,
       required: true
@@ -160,7 +176,15 @@ export default {
     srcSet: String,
     sizes: String,
     sources: Array,
+    width: Number,
+    height: Number,
+    hasSpacer: Boolean,
     zoomSrc: String,
+    zoomScale: {
+      type: Number,
+      default: 1
+    },
+    zoomPreload: Boolean,
     alt: String,
     fadeDuration: {
       type: Number,
@@ -171,13 +195,15 @@ export default {
       type: Number,
       default: 640
     },
+    hideHint: Boolean,
+    hideCloseButton: Boolean,
     className: String,
     afterZoomIn: Function,
     afterZoomOut: Function
   },
   data() {
     return {
-      isActive: false,
+      isActive: this.zoomPreload || false,
       isTouch: false,
       isZoomed: false,
       isFullscreen: false,
@@ -194,11 +220,15 @@ export default {
   computed: {
     validSources: function () {
       return this.sources ? this.sources.filter((source) => source.srcSet) : [];
+    },
+    createSpacer: function () {
+      return this.width && this.height && this.hasSpacer;
     }
   },
   methods: {
-    handleMouseEnter() {
+    handleMouseEnter(e) {
       this.isActive = true;
+      this.zoomType === 'hover' && !this.isZoomed && this.handleClick(e);
     },
     handleTouchStart() {
       this.isFullscreen =
@@ -210,8 +240,10 @@ export default {
     },
     handleClick(e) {
       if (this.isZoomed) {
-        if (!this.isTouch && !this.isDragging) {
-          this.zoomOut();
+        if (this.isTouch) {
+          this.hideCloseButton && this.handleClose();
+        } else {
+          !this.isDragging && this.zoomOut();
         }
 
         return;
@@ -221,15 +253,22 @@ export default {
         this.isActive = true;
       }
 
-      if (this.imgProps.isLoaded) {
+      if (this.imgProps.zoomImg) {
         this.zoomIn(e.pageX, e.pageY);
       } else {
         this.imgProps.onLoadCallback = this.zoomIn.bind(this, e.pageX, e.pageY);
       }
     },
     handleLoad(e) {
-      this.imgProps.isLoaded = true;
       this.imgProps.zoomImg = e.target;
+      this.imgProps.zoomImg.setAttribute(
+        'width',
+        this.imgProps.zoomImg.naturalWidth * this.zoomScale
+      );
+      this.imgProps.zoomImg.setAttribute(
+        'height',
+        this.imgProps.zoomImg.naturalHeight * this.zoomScale
+      );
       this.imgProps.bounds = getBounds(this.$refs.img, false);
       this.imgProps.ratios = getRatios(this.imgProps.bounds, this.imgProps.zoomImg);
 
@@ -368,7 +407,6 @@ export default {
       }
     },
     setDefaults() {
-      this.imgProps.isLoaded = false;
       this.imgProps.onLoadCallback = null;
       this.imgProps.zoomImg = null;
       this.imgProps.bounds = {};
@@ -409,6 +447,7 @@ function getRatios(bounds, zoomImg) {
 
 <style scoped>
 .iiz {
+  max-width: 100%;
   margin: 0;
   position: relative;
   overflow: hidden;
@@ -429,9 +468,18 @@ function getRatios(bounds, zoomImg) {
   opacity: 1;
 }
 
-.iiz__img--invisible {
+.iiz__img--hidden {
   visibility: hidden;
   opacity: 0;
+}
+
+.iiz__img--abs {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
 }
 
 .iiz__zoom-img {
