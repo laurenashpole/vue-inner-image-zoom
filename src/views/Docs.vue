@@ -65,14 +65,33 @@
             <b>sources (Array): </b>A list of image sources for using the picture tag to serve the
             appropriate original image (see below for more details).
           </li>
+          <li><b>width (Number): </b>Width attribute for original image.</li>
+          <li><b>height (Number): </b>Height attribute for original image.</li>
+          <li>
+            <b>hasSpacer (Boolean): </b>Default false. If true, gets the original image's aspect
+            ratio based on the width and height props and creates a spacer to prevent cumulative
+            layout shift.
+          </li>
           <li>
             <b>zoomSrc (String): </b>URL for the larger zoom image. Falls back to original image src
             if not defined.
+          </li>
+          <li>
+            <b>zoomScale (Number): </b>Default 1. Multiplied against the natural width and height of
+            the zoomed image. This will generally be a decimal (example, 0.9 for 90%).
+          </li>
+          <li>
+            <b>zoomPreload (Boolean): </b>Default false If set to true, preloads the zoom image
+            instead of waiting for mouseenter.
           </li>
           <li><b>alt (String): </b>Alternative text for the original image.</li>
           <li>
             <b>moveType (String): </b>Default pan. Accepts pan or drag options. The user behavior
             for moving zoomed images on non-touch devices.
+          </li>
+          <li>
+            <b>zoomType (String): </b>Default click. Accepts click or hover options. The trigger for
+            zooming images.
           </li>
           <li>
             <b>fadeDuration (Number): </b>Default 150. Fade transition time in milliseconds. If
@@ -86,6 +105,11 @@
             <b>mobileBreakpoint (Number): </b>Default 640. The maximum breakpoint for fullscreen
             zoom image when fullscreenOnMobile is true.
           </li>
+          <li>
+            <b>hideCloseButton (Boolean): </b>Default false. Hides the close button on touch
+            devices. If set to true, zoom out is triggered by tap.
+          </li>
+          <li><b>hideHint (Boolean): </b>Default false. Hides the magnifying glass hint.</li>
           <li><b>className (String): </b>Custom classname for styling the component.</li>
           <li><b>afterZoomIn (Function): </b>Function to be called after zoom in.</li>
           <li><b>afterZoomOut (Function): </b>Function to be called after zoom out.</li>

@@ -2,41 +2,60 @@
   <div class="demos">
     <h2 class="demos__heading">Demos</h2>
 
-    <nav class="demos__nav">
-      <span>jump to:</span>
-      <router-link
-        v-bind:to="{ path: 'demos', hash: '#basic' }"
-        v-on:click.native="scrollToHash('#basic')"
-        >Basic</router-link
-      >
-      <router-link
-        v-bind:to="{ path: 'demos', hash: '#dragToMove' }"
-        v-on:click.native="scrollToHash('#dragToMove')"
-        >Drag To Move</router-link
-      >
-      <router-link
-        v-bind:to="{ path: 'demos', hash: '#fullscreen' }"
-        v-on:click.native="scrollToHash('#fullscreen')"
-      >
-        Fullscreen On Mobile
-      </router-link>
-      <router-link
-        v-bind:to="{ path: 'demos', hash: '#responsive' }"
-        v-on:click.native="scrollToHash('#responsive')"
-      >
-        Responsive Images
-      </router-link>
-      <router-link
-        v-bind:to="{ path: 'demos', hash: '#lazyload' }"
-        v-on:click.native="scrollToHash('#lazyload')"
-      >
-        With Vue-Lazyload
-      </router-link>
-      <router-link
-        v-bind:to="{ path: 'demos', hash: '#slick' }"
-        v-on:click.native="scrollToHash('#slick')"
-        >With Slick Carousel</router-link
-      >
+    <nav class="demos__nav" aria-label="Demos">
+      <span class="demos__nav-label">jump to:</span>
+      <span>
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#basic' }"
+          v-on:click.native="scrollToHash('#basic')"
+          >Basic</router-link
+        >
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#withLoadingSpacer' }"
+          v-on:click.native="scrollToHash('#withLoadingSpacer')"
+          >With Loading Spacer</router-link
+        >
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#dragToMove' }"
+          v-on:click.native="scrollToHash('#dragToMove')"
+          >Drag To Move</router-link
+        >
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#zoomOnHover' }"
+          v-on:click.native="scrollToHash('#zoomOnHover')"
+          >Zoom On Hover</router-link
+        >
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#fullscreen' }"
+          v-on:click.native="scrollToHash('#fullscreen')"
+        >
+          Fullscreen On Mobile
+        </router-link>
+        <br />
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#mobileNoCloseButton' }"
+          v-on:click.native="scrollToHash('#mobileNoCloseButton')"
+        >
+          Mobile No Close Button
+        </router-link>
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#responsive' }"
+          v-on:click.native="scrollToHash('#responsive')"
+        >
+          Responsive Images
+        </router-link>
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#lazyload' }"
+          v-on:click.native="scrollToHash('#lazyload')"
+        >
+          With Vue-Lazyload
+        </router-link>
+        <router-link
+          v-bind:to="{ path: 'demos', hash: '#slick' }"
+          v-on:click.native="scrollToHash('#slick')"
+          >With Slick Carousel</router-link
+        >
+      </span>
     </nav>
 
     <section id="basic">
@@ -49,7 +68,7 @@
           <li>
             Photo credit:
             <a
-              href="https://unsplash.com/photos/yGCj9aMSBNI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@awcreativeut?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >Adam Winger</a
@@ -70,6 +89,46 @@
       </DemosDemo>
     </section>
 
+    <section id="withLoadingSpacer">
+      <DemosDemo
+        name="With Loading Spacer"
+        v-bind:code="
+          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :width=&quot;750&quot;\n  :height=&quot;500&quot;\n  :hasSpacer=&quot;true&quot;\n/>`
+        "
+      >
+        <template v-slot:notes>
+          <li>Uses width and height props to generate image aspect ratio</li>
+          <li>Creates an image spacer to prevent cumulative layout shift</li>
+          <li>
+            Photo credit:
+            <a
+              href="https://unsplash.com/@henmankk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Keagan Henman</a
+            >
+            on
+            <a
+              href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Unsplash</a
+            >
+          </li>
+        </template>
+
+        <template v-slot:example>
+          <InnerImageZoom
+            src="assets/unsplash-10.jpg"
+            zoomSrc="assets/unsplash-10-large.jpg"
+            :width="750"
+            :height="500"
+            :hasSpacer="true"
+          />
+        </template>
+      </DemosDemo>
+    </section>
+
     <section id="dragToMove">
       <DemosDemo
         name="Drag To Move"
@@ -82,7 +141,7 @@
           <li>
             Photo credit:
             <a
-              href="https://unsplash.com/photos/AgLMrojqjAM?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@rmrdnl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >Daniel Romero</a
@@ -107,6 +166,43 @@
       </DemosDemo>
     </section>
 
+    <section id="zoomOnHover">
+      <DemosDemo
+        name="Zoom On Hover"
+        v-bind:code="
+          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  zoomType=&quot;hover&quot;\n/>`
+        "
+      >
+        <template v-slot:notes>
+          <li>Trigger image zoom on hover</li>
+          <li>
+            Photo credit:
+            <a
+              href="https://unsplash.com/@louishansel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Louis Hansel</a
+            >
+            on
+            <a
+              href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Unsplash</a
+            >
+          </li>
+        </template>
+
+        <template v-slot:example>
+          <InnerImageZoom
+            src="assets/unsplash-12.jpg"
+            zoomSrc="assets/unsplash-12-large.jpg"
+            zoomType="hover"
+          />
+        </template>
+      </DemosDemo>
+    </section>
+
     <section id="fullscreen">
       <DemosDemo
         name="Fullscreen On Mobile"
@@ -119,7 +215,7 @@
           <li>
             Photo credit:
             <a
-              href="https://unsplash.com/photos/Qxffgf8DU60?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@ecopanda?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >EcoPanda</a
@@ -139,6 +235,44 @@
             src="assets/unsplash-4.jpg"
             zoomSrc="assets/unsplash-4-large.jpg"
             :fullscreenOnMobile="true"
+          />
+        </template>
+      </DemosDemo>
+    </section>
+
+    <section id="mobileNoCloseButton">
+      <DemosDemo
+        name="Mobile No Close Button"
+        v-bind:code="
+          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :hideCloseButton=&quot;true&quot;\n/>`
+        "
+      >
+        <template v-slot:notes>
+          <li>Hides the close button on touch devices</li>
+          <li>Zoom out is triggered by tap</li>
+          <li>
+            Photo credit:
+            <a
+              href="https://unsplash.com/@fredmarriage?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              target="_blank"
+              rel="noopener noreferrer"
+              >freddie marriage</a
+            >
+            on
+            <a
+              href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Unsplash</a
+            >
+          </li>
+        </template>
+
+        <template v-slot:example>
+          <InnerImageZoom
+            src="assets/unsplash-11.jpg"
+            zoomSrc="assets/unsplash-11-large.jpg"
+            :hideCloseButton="true"
           />
         </template>
       </DemosDemo>
@@ -166,7 +300,7 @@
           <li>
             Photo credit:
             <a
-              href="https://unsplash.com/photos/B9EHePG56zA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@lovefromyours?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >Yours</a
@@ -213,7 +347,7 @@
           <li>
             Photo credit:
             <a
-              href="https://unsplash.com/photos/1yBqaIvOvk4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@harrydona?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >Harry Dona</a
@@ -254,19 +388,19 @@
           <li>
             Photo credits:
             <a
-              href="https://unsplash.com/photos/UZ9UNIoePMw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@alejandroescamilla?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >Alejandro Escamilla</a
             >,
             <a
-              href="https://unsplash.com/photos/qQdv-By21yE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@jakobowens1?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >Jakob Owens</a
             >, and
             <a
-              href="https://unsplash.com/photos/ftdfdjMOQxw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              href="https://unsplash.com/@kalvisuals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
               target="_blank"
               rel="noopener noreferrer"
               >KAL VISUALS</a
@@ -356,15 +490,19 @@ export default {
   text-align: center;
 }
 
-.demos__nav a {
-  margin-left: 0.75rem;
-}
-
-.demos__nav span {
+.demos__nav-label {
   color: #4b4b4b;
   font-family: 'Frank Ruhl Libre', serif;
   font-style: italic;
   letter-spacing: 0.015em;
+}
+
+.demos__nav a {
+  margin-left: 0.75rem;
+}
+
+.demos__nav br {
+  display: none;
 }
 
 .demos section:last-child .demo {
@@ -395,6 +533,15 @@ export default {
     margin-bottom: 4.6rem;
     padding-left: 2rem;
     text-align: left;
+    display: flex;
+  }
+
+  .demos__nav-label {
+    flex-shrink: 0;
+  }
+
+  .demos__nav br {
+    display: block;
   }
 
   .demos__nav a {

@@ -33,6 +33,7 @@ html {
   color: #373737;
   font: 125% 'Mada', 'Helvetica', 'Arial', sans-serif;
   font-weight: 300;
+  scroll-behavior: smooth;
 }
 
 body {
