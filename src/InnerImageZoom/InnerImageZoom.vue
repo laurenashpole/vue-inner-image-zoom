@@ -36,9 +36,9 @@
             class="iiz__img"
             v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
             v-bind:style="{
-              transition: `linear 0ms opacity ${
+              transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
                 isZoomed ? fadeDuration : 0
-              }ms, linear 0ms visibility ${isZoomed ? fadeDuration : 0}ms`
+              }ms`
             }"
             v-bind:src="src"
             v-bind:srcSet="srcSet"
@@ -53,9 +53,9 @@
           class="iiz__img"
           v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
           v-bind:style="{
-            transition: `linear 0ms opacity ${
+            transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
               isZoomed ? fadeDuration : 0
-            }ms, linear 0ms visibility ${isZoomed ? fadeDuration : 0}ms`
+            }ms`
           }"
           v-bind:src="src"
           v-bind:srcSet="srcSet"
@@ -261,14 +261,8 @@ export default {
     },
     handleLoad(e) {
       this.imgProps.zoomImg = e.target;
-      this.imgProps.zoomImg.setAttribute(
-        'width',
-        this.imgProps.zoomImg.naturalWidth * this.zoomScale
-      );
-      this.imgProps.zoomImg.setAttribute(
-        'height',
-        this.imgProps.zoomImg.naturalHeight * this.zoomScale
-      );
+      this.imgProps.zoomImg.setAttribute('width', this.imgProps.zoomImg.naturalWidth * this.zoomScale);
+      this.imgProps.zoomImg.setAttribute('height', this.imgProps.zoomImg.naturalHeight * this.zoomScale);
       this.imgProps.bounds = getBounds(this.$refs.img, false);
       this.imgProps.ratios = getRatios(this.imgProps.bounds, this.imgProps.zoomImg);
 
@@ -294,11 +288,9 @@ export default {
         this.imgProps.zoomImg.offsetTop
       );
 
-      this.imgProps.zoomImg.addEventListener(
-        this.isTouch ? 'touchmove' : 'mousemove',
-        this.handleDragMove,
-        { passive: false }
-      );
+      this.imgProps.zoomImg.addEventListener(this.isTouch ? 'touchmove' : 'mousemove', this.handleDragMove, {
+        passive: false
+      });
 
       if (!this.isTouch) {
         this.imgProps.eventPosition = {
@@ -314,23 +306,14 @@ export default {
       let left = (e.pageX || e.changedTouches[0].pageX) - this.imgProps.offsets.x;
       let top = (e.pageY || e.changedTouches[0].pageY) - this.imgProps.offsets.y;
 
-      left = Math.max(
-        Math.min(left, 0),
-        (this.imgProps.zoomImg.offsetWidth - this.imgProps.bounds.width) * -1
-      );
-      top = Math.max(
-        Math.min(top, 0),
-        (this.imgProps.zoomImg.offsetHeight - this.imgProps.bounds.height) * -1
-      );
+      left = Math.max(Math.min(left, 0), (this.imgProps.zoomImg.offsetWidth - this.imgProps.bounds.width) * -1);
+      top = Math.max(Math.min(top, 0), (this.imgProps.zoomImg.offsetHeight - this.imgProps.bounds.height) * -1);
 
       this.left = left;
       this.top = top;
     },
     handleDragEnd(e) {
-      this.imgProps.zoomImg.removeEventListener(
-        this.isTouch ? 'touchmove' : 'mousemove',
-        this.handleDragMove
-      );
+      this.imgProps.zoomImg.removeEventListener(this.isTouch ? 'touchmove' : 'mousemove', this.handleDragMove);
 
       if (!this.isTouch) {
         const moveX = Math.abs(e.pageX - this.imgProps.eventPosition.x);
@@ -366,10 +349,8 @@ export default {
       });
     },
     initialDragMove(pageX, pageY) {
-      const initialPageX =
-        (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
-      const initialPageY =
-        (pageY - (window.pageYOffset + this.imgProps.bounds.top)) * -this.imgProps.ratios.y;
+      const initialPageX = (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
+      const initialPageY = (pageY - (window.pageYOffset + this.imgProps.bounds.top)) * -this.imgProps.ratios.y;
 
       this.imgProps.bounds = getBounds(this.$refs.img, this.isFullscreen);
       this.imgProps.offsets = getOffsets(0, 0, 0, 0);
