@@ -9,6 +9,7 @@
         :fullscreenOnMobile="true"
         :hideCloseButton="true"
         :hideHint="true"
+        :zoomPreload="true"
       />
     </div>
     <div style="margin-bottom: 30px;">

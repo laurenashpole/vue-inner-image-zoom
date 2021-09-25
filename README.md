@@ -64,10 +64,10 @@ height | Number | | Height attribute for original image.
 hasSpacer | Boolean | false | If true, gets the original image's aspect ratio based on the width and height props and creates a spacer to prevent cumulative layout shift.
 zoomSrc | String | | URL for the larger zoom image. Falls back to original image src if not defined.
 zoomScale | Number | 1 | Multiplied against the natural width and height of the zoomed image. This will generally be a decimal (example, 0.9 for 90%).
-zoomPreload | Boolean | false | If set to true, preloads the zoom image instead of waiting for mouseenter.
+zoomPreload | Boolean | false | If set to true, preloads the zoom image instead of waiting for mouseenter and (unless on a touch device) persists the image on mouseleave.
 alt | String | | Alternative text for the original image.
 moveType | String | pan | `pan` or `drag`. The user behavior for moving zoomed images on non-touch devices.
-zoomType | String | click | `click` or `hover`. The zoom behavior for images.
+zoomType | String | click | `click` or `hover`. The user behavior for triggering zoom. When using `hover`, combine with `zoomPreload` to avoid flickering on rapid mouse movements.
 fadeDuration | Number | 150 | Fade transition time in milliseconds. If zooming in on transparent images, set this to `0` for best results.
 fullscreenOnMobile | Boolean | false | Enables fullscreen zoomed image on touch devices below a specified breakpoint.
 mobileBreakpoint | Number | 640 | The maximum breakpoint for fullscreen zoom image when fullscreenOnMobile is true.

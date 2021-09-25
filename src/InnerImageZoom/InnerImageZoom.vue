@@ -327,8 +327,11 @@ export default {
     handleClose() {
       this.zoomOut(() => {
         setTimeout(() => {
-          this.setDefaults();
-          this.isActive = false;
+          if ((this.zoomPreload && this.isTouch) || !this.zoomPreload) {
+            this.isActive = false;
+            this.setDefaults();
+          }
+
           this.isTouch = false;
           this.isFullscreen = false;
           this.currentMoveType = this.moveType;
@@ -349,8 +352,11 @@ export default {
       });
     },
     initialDragMove(pageX, pageY) {
-      const initialPageX = (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
-      const initialPageY = (pageY - (window.pageYOffset + this.imgProps.bounds.top)) * -this.imgProps.ratios.y;
+      let initialPageX = (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
+      let initialPageY = (pageY - (window.pageYOffset + this.imgProps.bounds.top)) * -this.imgProps.ratios.y;
+
+      initialPageX = initialPageX + (this.isFullscreen ? (window.innerWidth - this.imgProps.bounds.width) / 2 : 0);
+      initialPageY = initialPageY + (this.isFullscreen ? (window.innerHeight - this.imgProps.bounds.height) / 2 : 0);
 
       this.imgProps.bounds = getBounds(this.$refs.img, this.isFullscreen);
       this.imgProps.offsets = getOffsets(0, 0, 0, 0);
