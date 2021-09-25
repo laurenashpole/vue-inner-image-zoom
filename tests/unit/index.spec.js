@@ -134,6 +134,17 @@ describe('InnerImageZoom', () => {
         expect(!!document.querySelector('.iiz__zoom-portal')).toEqual(true);
       });
     });
+
+    it('fires afterZoomIn callback on zoom in', async () => {
+      const afterZoomIn = jest.fn();
+      const wrapper = innerImageZoom({ afterZoomIn: afterZoomIn });
+      const figure = wrapper.find('figure');
+      await figure.trigger('mouseenter');
+      await figure.trigger('click', { pageX: 100, pageY: 100 });
+      await figure.find('.iiz__zoom-img').trigger('load');
+      expect(afterZoomIn).toHaveBeenCalled();
+      afterZoomIn.mockReset();
+    });
   });
 
   describe('move', () => {
@@ -245,6 +256,21 @@ describe('InnerImageZoom', () => {
 
     setTimeout(() => {
       expect(figure.find('.iiz__zoom-img').exists()).toEqual(true);
+      done();
+    }, 150);
+  });
+
+  it('fires afterZoomOut callback on zoom out', async (done) => {
+    const afterZoomOut = jest.fn();
+    const wrapper = innerImageZoom({ afterZoomOut: afterZoomOut });
+    const figure = wrapper.find('figure');
+    await figure.trigger('mouseenter');
+    await figure.trigger('click', { pageX: 100, pageY: 100 });
+    await figure.trigger('mouseleave');
+
+    setTimeout(() => {
+      expect(afterZoomOut).toHaveBeenCalled();
+      afterZoomOut.mockReset();
       done();
     }, 150);
   });
