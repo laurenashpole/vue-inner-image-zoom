@@ -236,16 +236,16 @@ describe('InnerImageZoom', () => {
     });
   });
 
-    it('persists the zoomed image after fade transition if zoomPreload is true', async (done) => {
-      const wrapper = innerImageZoom({ zoomPreload: true });
-      const figure = wrapper.find('figure');
-      await figure.trigger('mouseenter');
-      await figure.trigger('click', { pageX: 100, pageY: 100 });
-      await figure.trigger('mouseleave');
+  it('persists the zoomed image after fade transition if zoomPreload is true', async (done) => {
+    const wrapper = innerImageZoom({ zoomPreload: true });
+    const figure = wrapper.find('figure');
+    await figure.trigger('mouseenter');
+    await figure.trigger('click', { pageX: 100, pageY: 100 });
+    await figure.trigger('mouseleave');
 
-      setTimeout(() => {
-        expect(figure.find('.iiz__zoom-img').exists()).toEqual(true);
-        done();
-      }, 150);
-    });
+    setTimeout(() => {
+      expect(figure.find('.iiz__zoom-img').exists()).toEqual(true);
+      done();
+    }, 150);
+  });
 });
