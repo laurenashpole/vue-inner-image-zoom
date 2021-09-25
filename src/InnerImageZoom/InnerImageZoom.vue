@@ -260,11 +260,14 @@ export default {
       }
     },
     handleLoad(e) {
+      const scaledDimensions = getScaledDimensions(e.target, this.zoomScale);
+
       this.imgProps.zoomImg = e.target;
-      this.imgProps.zoomImg.setAttribute('width', this.imgProps.zoomImg.naturalWidth * this.zoomScale);
-      this.imgProps.zoomImg.setAttribute('height', this.imgProps.zoomImg.naturalHeight * this.zoomScale);
+      this.imgProps.zoomImg.setAttribute('width', scaledDimensions.width);
+      this.imgProps.zoomImg.setAttribute('height', scaledDimensions.height);
+      this.imgProps.scaledDimensions = scaledDimensions;
       this.imgProps.bounds = getBounds(this.$refs.img, false);
-      this.imgProps.ratios = getRatios(this.imgProps.bounds, this.imgProps.zoomImg);
+      this.imgProps.ratios = getRatios(this.imgProps.bounds, scaledDimensions);
 
       if (this.imgProps.onLoadCallback) {
         this.imgProps.onLoadCallback();
@@ -289,7 +292,7 @@ export default {
       );
 
       this.imgProps.zoomImg.addEventListener(this.isTouch ? 'touchmove' : 'mousemove', this.handleDragMove, {
-        passive: false
+        passive: true
       });
 
       if (!this.isTouch) {
@@ -300,14 +303,11 @@ export default {
       }
     },
     handleDragMove(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
       let left = (e.pageX || e.changedTouches[0].pageX) - this.imgProps.offsets.x;
       let top = (e.pageY || e.changedTouches[0].pageY) - this.imgProps.offsets.y;
 
-      left = Math.max(Math.min(left, 0), (this.imgProps.zoomImg.offsetWidth - this.imgProps.bounds.width) * -1);
-      top = Math.max(Math.min(top, 0), (this.imgProps.zoomImg.offsetHeight - this.imgProps.bounds.height) * -1);
+      left = Math.max(Math.min(left, 0), (this.imgProps.scaledDimensions.width - this.imgProps.bounds.width) * -1);
+      top = Math.max(Math.min(top, 0), (this.imgProps.scaledDimensions.height - this.imgProps.bounds.height) * -1);
 
       this.left = left;
       this.top = top;
@@ -326,16 +326,19 @@ export default {
     },
     handleClose() {
       this.zoomOut(() => {
-        setTimeout(() => {
-          if ((this.zoomPreload && this.isTouch) || !this.zoomPreload) {
-            this.isActive = false;
-            this.setDefaults();
-          }
+        setTimeout(
+          () => {
+            if ((this.zoomPreload && this.isTouch) || !this.zoomPreload) {
+              this.isActive = false;
+              this.setDefaults();
+            }
 
-          this.isTouch = false;
-          this.isFullscreen = false;
-          this.currentMoveType = this.moveType;
-        }, this.fadeDuration);
+            this.isTouch = false;
+            this.isFullscreen = false;
+            this.currentMoveType = this.moveType;
+          },
+          this.isFullscreen ? 0 : this.fadeDuration
+        );
       });
     },
     initialMove(pageX, pageY) {
@@ -400,6 +403,7 @@ export default {
       this.imgProps.offsets = {};
       this.imgProps.ratios = {};
       this.imgProps.eventPosition = {};
+      this.imgProps.scaledDimensions = {};
     }
   }
 };
@@ -424,10 +428,17 @@ function getOffsets(pageX, pageY, left, top) {
   };
 }
 
-function getRatios(bounds, zoomImg) {
+function getRatios(bounds, dimensions) {
   return {
-    x: (zoomImg.offsetWidth - bounds.width) / bounds.width,
-    y: (zoomImg.offsetHeight - bounds.height) / bounds.height
+    x: (dimensions.width - bounds.width) / bounds.width,
+    y: (dimensions.height - bounds.height) / bounds.height
+  };
+}
+
+function getScaledDimensions(zoomImg, zoomScale) {
+  return {
+    width: zoomImg.naturalWidth * zoomScale,
+    height: zoomImg.naturalHeight * zoomScale
   };
 }
 </script>
@@ -475,13 +486,17 @@ function getRatios(bounds, zoomImg) {
   position: absolute;
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
   display: block;
 }
 
 .iiz__zoom-img--visible {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
   cursor: zoom-out;
+  -ms-touch-action: none;
+  touch-action: none;
 }
 
 .iiz__zoom-portal {
