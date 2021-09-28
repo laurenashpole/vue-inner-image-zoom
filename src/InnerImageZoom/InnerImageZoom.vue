@@ -36,9 +36,9 @@
             class="iiz__img"
             v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
             v-bind:style="{
-              transition: `linear 0ms opacity ${
+              transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
                 isZoomed ? fadeDuration : 0
-              }ms, linear 0ms visibility ${isZoomed ? fadeDuration : 0}ms`
+              }ms`
             }"
             v-bind:src="src"
             v-bind:srcSet="srcSet"
@@ -53,9 +53,9 @@
           class="iiz__img"
           v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
           v-bind:style="{
-            transition: `linear 0ms opacity ${
+            transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
               isZoomed ? fadeDuration : 0
-            }ms, linear 0ms visibility ${isZoomed ? fadeDuration : 0}ms`
+            }ms`
           }"
           v-bind:src="src"
           v-bind:srcSet="srcSet"
@@ -216,6 +216,10 @@ export default {
   },
   created() {
     this.setDefaults();
+
+    if (getFullscreenStatus(this.fullscreenOnMobile, this.mobileBreakpoint)) {
+      this.isActive = false;
+    }
   },
   computed: {
     validSources: function () {
@@ -231,11 +235,8 @@ export default {
       this.zoomType === 'hover' && !this.isZoomed && this.handleClick(e);
     },
     handleTouchStart() {
-      this.isFullscreen =
-        this.fullscreenOnMobile &&
-        window.matchMedia &&
-        window.matchMedia(`(max-width: ${this.mobileBreakpoint}px)`).matches;
       this.isTouch = true;
+      this.isFullscreen = getFullscreenStatus(this.fullscreenOnMobile, this.mobileBreakpoint);
       this.currentMoveType = 'drag';
     },
     handleClick(e) {
@@ -254,23 +255,21 @@ export default {
       }
 
       if (this.imgProps.zoomImg) {
+        this.handleLoad({ target: this.imgProps.zoomImg });
         this.zoomIn(e.pageX, e.pageY);
       } else {
         this.imgProps.onLoadCallback = this.zoomIn.bind(this, e.pageX, e.pageY);
       }
     },
     handleLoad(e) {
+      const scaledDimensions = getScaledDimensions(e.target, this.zoomScale);
+
       this.imgProps.zoomImg = e.target;
-      this.imgProps.zoomImg.setAttribute(
-        'width',
-        this.imgProps.zoomImg.naturalWidth * this.zoomScale
-      );
-      this.imgProps.zoomImg.setAttribute(
-        'height',
-        this.imgProps.zoomImg.naturalHeight * this.zoomScale
-      );
+      this.imgProps.zoomImg.setAttribute('width', scaledDimensions.width);
+      this.imgProps.zoomImg.setAttribute('height', scaledDimensions.height);
+      this.imgProps.scaledDimensions = scaledDimensions;
       this.imgProps.bounds = getBounds(this.$refs.img, false);
-      this.imgProps.ratios = getRatios(this.imgProps.bounds, this.imgProps.zoomImg);
+      this.imgProps.ratios = getRatios(this.imgProps.bounds, scaledDimensions);
 
       if (this.imgProps.onLoadCallback) {
         this.imgProps.onLoadCallback();
@@ -284,7 +283,8 @@ export default {
       left = Math.max(Math.min(left, this.imgProps.bounds.width), 0);
       top = Math.max(Math.min(top, this.imgProps.bounds.height), 0);
 
-      (this.left = left * -this.imgProps.ratios.x), (this.top = top * -this.imgProps.ratios.y);
+      this.left = left * -this.imgProps.ratios.x;
+      this.top = top * -this.imgProps.ratios.y;
     },
     handleDragStart(e) {
       this.imgProps.offsets = getOffsets(
@@ -294,11 +294,9 @@ export default {
         this.imgProps.zoomImg.offsetTop
       );
 
-      this.imgProps.zoomImg.addEventListener(
-        this.isTouch ? 'touchmove' : 'mousemove',
-        this.handleDragMove,
-        { passive: false }
-      );
+      this.imgProps.zoomImg.addEventListener(this.isTouch ? 'touchmove' : 'mousemove', this.handleDragMove, {
+        passive: true
+      });
 
       if (!this.isTouch) {
         this.imgProps.eventPosition = {
@@ -308,29 +306,17 @@ export default {
       }
     },
     handleDragMove(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
       let left = (e.pageX || e.changedTouches[0].pageX) - this.imgProps.offsets.x;
       let top = (e.pageY || e.changedTouches[0].pageY) - this.imgProps.offsets.y;
 
-      left = Math.max(
-        Math.min(left, 0),
-        (this.imgProps.zoomImg.offsetWidth - this.imgProps.bounds.width) * -1
-      );
-      top = Math.max(
-        Math.min(top, 0),
-        (this.imgProps.zoomImg.offsetHeight - this.imgProps.bounds.height) * -1
-      );
+      left = Math.max(Math.min(left, 0), (this.imgProps.scaledDimensions.width - this.imgProps.bounds.width) * -1);
+      top = Math.max(Math.min(top, 0), (this.imgProps.scaledDimensions.height - this.imgProps.bounds.height) * -1);
 
       this.left = left;
       this.top = top;
     },
     handleDragEnd(e) {
-      this.imgProps.zoomImg.removeEventListener(
-        this.isTouch ? 'touchmove' : 'mousemove',
-        this.handleDragMove
-      );
+      this.imgProps.zoomImg.removeEventListener(this.isTouch ? 'touchmove' : 'mousemove', this.handleDragMove);
 
       if (!this.isTouch) {
         const moveX = Math.abs(e.pageX - this.imgProps.eventPosition.x);
@@ -343,13 +329,19 @@ export default {
     },
     handleClose() {
       this.zoomOut(() => {
-        setTimeout(() => {
-          this.setDefaults();
-          this.isActive = false;
-          this.isTouch = false;
-          this.isFullscreen = false;
-          this.currentMoveType = this.moveType;
-        }, this.fadeDuration);
+        setTimeout(
+          () => {
+            if ((this.zoomPreload && this.isTouch) || !this.zoomPreload) {
+              this.isActive = false;
+              this.setDefaults();
+            }
+
+            this.isTouch = false;
+            this.isFullscreen = false;
+            this.currentMoveType = this.moveType;
+          },
+          this.isFullscreen ? 0 : this.fadeDuration
+        );
       });
     },
     initialMove(pageX, pageY) {
@@ -360,16 +352,14 @@ export default {
         -this.imgProps.bounds.top
       );
 
-      this.handleMouseMove({
-        pageX: pageX,
-        pageY: pageY
-      });
+      this.handleMouseMove({ pageX, pageY });
     },
     initialDragMove(pageX, pageY) {
-      const initialPageX =
-        (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
-      const initialPageY =
-        (pageY - (window.pageYOffset + this.imgProps.bounds.top)) * -this.imgProps.ratios.y;
+      let initialPageX = (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
+      let initialPageY = (pageY - (window.pageYOffset + this.imgProps.bounds.top)) * -this.imgProps.ratios.y;
+
+      initialPageX = initialPageX + (this.isFullscreen ? (window.innerWidth - this.imgProps.bounds.width) / 2 : 0);
+      initialPageY = initialPageY + (this.isFullscreen ? (window.innerHeight - this.imgProps.bounds.height) / 2 : 0);
 
       this.imgProps.bounds = getBounds(this.$refs.img, this.isFullscreen);
       this.imgProps.offsets = getOffsets(0, 0, 0, 0);
@@ -413,6 +403,7 @@ export default {
       this.imgProps.offsets = {};
       this.imgProps.ratios = {};
       this.imgProps.eventPosition = {};
+      this.imgProps.scaledDimensions = {};
     }
   }
 };
@@ -437,10 +428,21 @@ function getOffsets(pageX, pageY, left, top) {
   };
 }
 
-function getRatios(bounds, zoomImg) {
+function getRatios(bounds, dimensions) {
   return {
-    x: (zoomImg.offsetWidth - bounds.width) / bounds.width,
-    y: (zoomImg.offsetHeight - bounds.height) / bounds.height
+    x: (dimensions.width - bounds.width) / bounds.width,
+    y: (dimensions.height - bounds.height) / bounds.height
+  };
+}
+
+function getFullscreenStatus(fullscreenOnMobile, mobileBreakpoint) {
+  return fullscreenOnMobile && window.matchMedia && window.matchMedia(`(max-width: ${mobileBreakpoint}px)`).matches;
+}
+
+function getScaledDimensions(zoomImg, zoomScale) {
+  return {
+    width: zoomImg.naturalWidth * zoomScale,
+    height: zoomImg.naturalHeight * zoomScale
   };
 }
 </script>
@@ -488,13 +490,17 @@ function getRatios(bounds, zoomImg) {
   position: absolute;
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
   display: block;
 }
 
 .iiz__zoom-img--visible {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
   cursor: zoom-out;
+  -ms-touch-action: none;
+  touch-action: none;
 }
 
 .iiz__zoom-portal {

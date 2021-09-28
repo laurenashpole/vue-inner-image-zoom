@@ -9,6 +9,7 @@
         :fullscreenOnMobile="true"
         :hideCloseButton="true"
         :hideHint="true"
+        :zoomPreload="true"
       />
     </div>
     <div style="margin-bottom: 30px;">
@@ -17,7 +18,7 @@
         src="/assets/unsplash2.jpg"
         zoomSrc="/assets/unsplash2-large.jpg"
         moveType="drag"
-        :fullscreenOnMobile="true"
+        :fullscreenOnMobile="false"
         :width="750"
         :height="500"
         :hasSpacer="true"
@@ -31,6 +32,7 @@
         zoomType="hover"
         :fullscreenOnMobile="true"
         :zoomScale="0.9"
+        :zoomPreload="true"
       />
     </div>
   </div>

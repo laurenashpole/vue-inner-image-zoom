@@ -1,6 +1,6 @@
 {
   "name": "vue-inner-image-zoom",
-  "version": "0.0.0-development",
+  "version": "1.2.0",
   "description": "A Vue.js component for magnifying an image within its original container.",
   "main": "lib/vue-inner-image-zoom.umd.js",
   "unpkg": "lib/vue-inner-image-zoom.common.js",
