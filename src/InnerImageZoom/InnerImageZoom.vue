@@ -216,6 +216,10 @@ export default {
   },
   created() {
     this.setDefaults();
+
+    if (getFullscreenStatus(this.fullscreenOnMobile, this.mobileBreakpoint)) {
+      this.isActive = false;
+    }
   },
   computed: {
     validSources: function () {
@@ -231,11 +235,8 @@ export default {
       this.zoomType === 'hover' && !this.isZoomed && this.handleClick(e);
     },
     handleTouchStart() {
-      this.isFullscreen =
-        this.fullscreenOnMobile &&
-        window.matchMedia &&
-        window.matchMedia(`(max-width: ${this.mobileBreakpoint}px)`).matches;
       this.isTouch = true;
+      this.isFullscreen = getFullscreenStatus(this.fullscreenOnMobile, this.mobileBreakpoint);
       this.currentMoveType = 'drag';
     },
     handleClick(e) {
@@ -254,6 +255,7 @@ export default {
       }
 
       if (this.imgProps.zoomImg) {
+        this.handleLoad({ target: this.imgProps.zoomImg });
         this.zoomIn(e.pageX, e.pageY);
       } else {
         this.imgProps.onLoadCallback = this.zoomIn.bind(this, e.pageX, e.pageY);
@@ -281,7 +283,8 @@ export default {
       left = Math.max(Math.min(left, this.imgProps.bounds.width), 0);
       top = Math.max(Math.min(top, this.imgProps.bounds.height), 0);
 
-      (this.left = left * -this.imgProps.ratios.x), (this.top = top * -this.imgProps.ratios.y);
+      this.left = left * -this.imgProps.ratios.x;
+      this.top = top * -this.imgProps.ratios.y;
     },
     handleDragStart(e) {
       this.imgProps.offsets = getOffsets(
@@ -349,10 +352,7 @@ export default {
         -this.imgProps.bounds.top
       );
 
-      this.handleMouseMove({
-        pageX: pageX,
-        pageY: pageY
-      });
+      this.handleMouseMove({ pageX, pageY });
     },
     initialDragMove(pageX, pageY) {
       let initialPageX = (pageX - (window.pageXOffset + this.imgProps.bounds.left)) * -this.imgProps.ratios.x;
@@ -433,6 +433,10 @@ function getRatios(bounds, dimensions) {
     x: (dimensions.width - bounds.width) / bounds.width,
     y: (dimensions.height - bounds.height) / bounds.height
   };
+}
+
+function getFullscreenStatus(fullscreenOnMobile, mobileBreakpoint) {
+  return fullscreenOnMobile && window.matchMedia && window.matchMedia(`(max-width: ${mobileBreakpoint}px)`).matches;
 }
 
 function getScaledDimensions(zoomImg, zoomScale) {
