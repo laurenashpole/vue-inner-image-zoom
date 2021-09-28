@@ -6,8 +6,7 @@ A Vue component for magnifying an image within its original container. The zoom 
 
 This component is based on an [earlier version built for React](https://github.com/laurenashpole/react-inner-image-zoom).
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
+![GitHub Actions][build-badge] [![npm package][npm-badge]][npm]
 
 ## Installation
 
@@ -100,8 +99,7 @@ One of my big motivations for adapting this component from the original [React I
 
 [MIT](https://github.com/laurenashpole/vue-inner-image-zoom/blob/master/LICENSE)
 
-[build-badge]: https://travis-ci.org/laurenashpole/vue-inner-image-zoom.svg?branch=master
-[build]: https://travis-ci.org/laurenashpole/vue-inner-image-zoom
+[build-badge]: https://github.com/laurenashpole/react-inner-image-zoom/actions/workflows/release.yml/badge.svg
 
 [npm-badge]: http://img.shields.io/npm/v/vue-inner-image-zoom.svg?style=flat
 [npm]: https://www.npmjs.com/package/vue-inner-image-zoom
