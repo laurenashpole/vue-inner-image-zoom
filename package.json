@@ -27,6 +27,8 @@
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-unit-jest": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
+    "@vue/compat": "^3.0.0",
+    "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
@@ -35,8 +37,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.0.5",
     "semantic-release": "^17.1.1",
-    "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11"
+    "vue": "^3.0.0"
   },
   "peerDependencies": {
     "core-js": "^3.6.5",
