@@ -2,6 +2,16 @@
   "name": "vue-inner-image-zoom",
   "version": "1.2.0",
   "description": "A Vue.js component for magnifying an image within its original container.",
+  "author": "Lauren Ashpole",
+  "scripts": {
+    "build": "vue-cli-service build --target lib --dest lib src/index.js",
+    "lint": "vue-cli-service lint",
+    "build:demo": "vue-cli-service build --target app --dest demo/dist demo/src/index.js",
+    "prepublishOnly": "npm run build",
+    "semantic-release": "semantic-release",
+    "start": "vue-cli-service serve",
+    "test": "vue-cli-service test:unit"
+  },
   "main": "lib/vue-inner-image-zoom.umd.js",
   "unpkg": "lib/vue-inner-image-zoom.common.js",
   "files": [
@@ -9,27 +19,14 @@
     "lib/*.js",
     "lib/*.map"
   ],
-  "scripts": {
-    "start": "vue-cli-service serve",
-    "build:demo": "vue-cli-service build --target app --dest demo/dist demo/src/index.js",
-    "build": "vue-cli-service build --target lib --dest lib src/index.js",
-    "prepublishOnly": "npm run build",
-    "test": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "semantic-release": "semantic-release"
-  },
   "dependencies": {
     "portal-vue": "^2.1.7"
   },
-  "peerDependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11"
-  },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-plugin-unit-jest": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
+    "@vue/cli-plugin-babel": "~4.5.15",
+    "@vue/cli-plugin-eslint": "~4.5.15",
+    "@vue/cli-plugin-unit-jest": "~4.5.15",
+    "@vue/cli-service": "~4.5.15",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
@@ -37,20 +34,18 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.0.5",
+    "semantic-release": "^17.1.1",
     "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11",
-    "semantic-release": "^17.1.1"
+    "vue-template-compiler": "^2.6.11"
   },
-  "author": "Lauren Ashpole",
-  "homepage": "https://github.com/laurenashpole/vue-inner-image-zoom#readme",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/laurenashpole/vue-inner-image-zoom.git"
+  "peerDependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11"
   },
   "bugs": {
     "url": "https://github.com/laurenashpole/vue-inner-image-zoom/issues"
   },
+  "homepage": "https://github.com/laurenashpole/vue-inner-image-zoom#readme",
   "keywords": [
     "vue",
     "vue-component",
@@ -62,5 +57,10 @@
     "photo",
     "pdp",
     "ecommerce"
-  ]
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laurenashpole/vue-inner-image-zoom.git"
+  }
 }
