@@ -10,6 +10,8 @@ This component is based on an [earlier version built for React](https://github.c
 
 ## Installation
 
+**Note:** Version 2.0.0 upgrades the component to support Vue 3. To use this package with older versions of Vue, install using `npm install vue-inner-image-zoom@1.1.1` or `yarn add vue-inner-image-zoom@1.1.1` instead of the instructions below.
+
 ### NPM
 ```
 npm install vue-inner-image-zoom
