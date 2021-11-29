@@ -18,7 +18,8 @@ module.exports = {
         trailingComma: 'none',
         printWidth: 100
       }
-    ]
+    ],
+    'vue/multi-word-component-names': 'off'
   },
   ignorePatterns: ['node_modules', 'vue-inner-image-zoom'],
   overrides: [
