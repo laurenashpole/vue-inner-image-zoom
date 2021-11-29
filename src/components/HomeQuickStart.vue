@@ -17,9 +17,7 @@
       </div>
       <div class="quick-start__step">
         <span>Template:</span>
-        <code v-pre>
-          &lt;inner-image-zoom src="/path/to/image.jpg" /&gt;
-        </code>
+        <code v-pre> &lt;inner-image-zoom src="/path/to/image.jpg" /&gt; </code>
       </div>
     </div>
   </section>

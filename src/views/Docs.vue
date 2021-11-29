@@ -26,7 +26,11 @@
     <section class="docs__content">
       <div>
         <h3 id="installation">Installation</h3>
-        <b>Note:</b> Version 2.0.0 upgrades the component to support Vue 3. To use this package with older versions of Vue, install using <code class="docs__inline-code">npm install vue-inner-image-zoom@1.1.1</code> or <code class="docs__inline-code">yarn add vue-inner-image-zoom@1.1.1</code> instead of the instructions below.
+        <b>Note:</b> Version 2.0.0 upgrades the component to support Vue 3. To use this package with
+        older versions of Vue, install using
+        <code class="docs__inline-code">npm install vue-inner-image-zoom@1.1.1</code> or
+        <code class="docs__inline-code">yarn add vue-inner-image-zoom@1.1.1</code> instead of the
+        instructions below.
         <h4>NPM</h4>
         <pre class="docs__code"><code v-pre>npm install vue-inner-image-zoom</code></pre>
         <h4>Yarn</h4>

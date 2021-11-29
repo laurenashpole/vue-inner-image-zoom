@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    parsedName: function() {
+    parsedName: function () {
       return `${this.name.replace(/ /g, '')}Code`;
     }
   },

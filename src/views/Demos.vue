@@ -321,9 +321,7 @@
         <template v-slot:notes>
           <li>
             Integration with
-            <a href="https://github.com/nolimits4web/swiper" target="_blank"
-              >Swiper</a
-            >
+            <a href="https://github.com/nolimits4web/swiper" target="_blank">Swiper</a>
           </li>
           <li>Recommend using with fullscreenOnMobile</li>
           <li>
@@ -357,7 +355,12 @@
         </template>
 
         <template v-slot:example>
-          <swiper :modules="modules" loop :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }" :pagination="{ clickable: true }">
+          <swiper
+            :modules="modules"
+            loop
+            :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
+            :pagination="{ clickable: true }"
+          >
             <swiper-slide>
               <InnerImageZoom
                 src="assets/unsplash-8.jpg"
@@ -407,7 +410,7 @@ export default {
     Swiper,
     SwiperSlide
   },
-  setup () {
+  setup() {
     return {
       modules: [Navigation, Pagination, A11y]
     };
