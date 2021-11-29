@@ -51,13 +51,13 @@ describe('InnerImageZoom', () => {
 
       it('renders the original image with sources', () => {
         const wrapper = innerImageZoom({ sources: TEST_PROPS.sources });
-        const sources = wrapper.findAll('source').wrappers;
+        const sources = wrapper.findAll('source');
         expect(sources.length).toEqual(2);
       });
 
       it('only renders sources that have srcSet set', () => {
         const wrapper = innerImageZoom({ sources: TEST_PROPS.invalidSources });
-        const sources = wrapper.findAll('source').wrappers;
+        const sources = wrapper.findAll('source');
         expect(sources.length).toEqual(1);
       });
 
