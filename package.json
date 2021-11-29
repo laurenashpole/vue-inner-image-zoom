@@ -19,15 +19,12 @@
     "lib/*.js",
     "lib/*.map"
   ],
-  "dependencies": {
-    "portal-vue": "^2.1.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-unit-jest": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
-    "@vue/compat": "^3.0.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "^1.0.3",
