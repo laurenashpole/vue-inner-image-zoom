@@ -67,12 +67,12 @@
 
     <template v-if="isActive">
       <template v-if="isFullscreen">
-        <MountingPortal mount-to="body" name="iizPortal" append>
+        <teleport to="body">
           <div class="iiz__zoom-portal">
             <img
               class="iiz__zoom-img"
               alt=""
-              draggable="false"
+              :draggable="false"
               v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
               v-bind:style="{
                 top: `${top}px`,
@@ -106,14 +106,14 @@
               v-on:click.stop="handleClose"
             />
           </div>
-        </MountingPortal>
+        </teleport>
       </template>
 
       <template v-else>
         <img
           class="iiz__zoom-img"
           alt=""
-          draggable="false"
+          :draggable="false"
           v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
           v-bind:style="{
             top: `${top}px`,
@@ -153,13 +153,8 @@
 </template>
 
 <script>
-import { MountingPortal } from 'portal-vue';
-
 export default {
   name: 'InnerImageZoom',
-  components: {
-    MountingPortal
-  },
   props: {
     moveType: {
       type: String,
