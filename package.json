@@ -12,7 +12,7 @@
     "core-js": "^3.6.5",
     "swiper": "^7.3.1",
     "vue": "^3.1.0",
-    "vue-inner-image-zoom": "^1.1.0",
+    "vue-inner-image-zoom": "^2.0.0",
     "vue-router": "^4.0.12",
     "vue3-clipboard": "^1.0.0"
   },
