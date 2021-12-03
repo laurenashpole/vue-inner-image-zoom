@@ -5,24 +5,20 @@
     <nav class="docs__nav">
       <router-link
         v-bind:to="{ path: 'docs', hash: '#installation' }"
-        v-on:click.native="scrollToHash('#installation')"
+        v-on:click="scrollToHash('#installation')"
       >
         Installation
       </router-link>
       <router-link
         v-bind:to="{ path: 'docs', hash: '#styling' }"
-        v-on:click.native="scrollToHash('#styling')"
+        v-on:click="scrollToHash('#styling')"
       >
         Styling
       </router-link>
-      <router-link
-        v-bind:to="{ path: 'docs', hash: '#usage' }"
-        v-on:click.native="scrollToHash('#usage')"
+      <router-link v-bind:to="{ path: 'docs', hash: '#usage' }" v-on:click="scrollToHash('#usage')"
         >Usage</router-link
       >
-      <router-link
-        v-bind:to="{ path: 'docs', hash: '#props' }"
-        v-on:click.native="scrollToHash('#props')"
+      <router-link v-bind:to="{ path: 'docs', hash: '#props' }" v-on:click="scrollToHash('#props')"
         >Props</router-link
       >
     </nav>
@@ -30,6 +26,11 @@
     <section class="docs__content">
       <div>
         <h3 id="installation">Installation</h3>
+        <b>Note:</b> Version 2.0.0 upgrades the component to support Vue 3. To use this package with
+        older versions of Vue, install using
+        <code class="docs__inline-code">npm install vue-inner-image-zoom@1.1.1</code> or
+        <code class="docs__inline-code">yarn add vue-inner-image-zoom@1.1.1</code> instead of the
+        instructions below.
         <h4>NPM</h4>
         <pre class="docs__code"><code v-pre>npm install vue-inner-image-zoom</code></pre>
         <h4>Yarn</h4>
@@ -147,18 +148,18 @@
 <script>
 export default {
   name: 'Docs',
-  mounted: function() {
+  mounted: function () {
     document.body.style.height = 'auto';
 
     if (this.$route.hash) {
       setTimeout(() => this.scrollToHash(this.$route.hash.replace('#', '')), 1);
     }
   },
-  destroyed: function() {
+  unmounted: function () {
     document.body.style.height = '100%';
   },
   methods: {
-    scrollToHash: function(hashbang) {
+    scrollToHash: function (hashbang) {
       window.scroll(0, document.getElementById(hashbang.replace('#', '')).offsetTop);
     }
   }
@@ -219,6 +220,12 @@ export default {
 
 .docs__content p:last-child {
   margin-bottom: 0;
+}
+
+.docs__inline-code {
+  background: #f2f3f7;
+  border-radius: 1px;
+  padding: 2px 4px;
 }
 
 .docs__code {

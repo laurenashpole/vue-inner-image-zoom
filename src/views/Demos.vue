@@ -7,53 +7,47 @@
       <span>
         <router-link
           v-bind:to="{ path: 'demos', hash: '#basic' }"
-          v-on:click.native="scrollToHash('#basic')"
+          v-on:click="scrollToHash('#basic')"
           >Basic</router-link
         >
         <router-link
           v-bind:to="{ path: 'demos', hash: '#withLoadingSpacer' }"
-          v-on:click.native="scrollToHash('#withLoadingSpacer')"
+          v-on:click="scrollToHash('#withLoadingSpacer')"
           >With Loading Spacer</router-link
         >
         <router-link
           v-bind:to="{ path: 'demos', hash: '#dragToMove' }"
-          v-on:click.native="scrollToHash('#dragToMove')"
+          v-on:click="scrollToHash('#dragToMove')"
           >Drag To Move</router-link
         >
         <router-link
           v-bind:to="{ path: 'demos', hash: '#zoomOnHover' }"
-          v-on:click.native="scrollToHash('#zoomOnHover')"
+          v-on:click="scrollToHash('#zoomOnHover')"
           >Zoom On Hover</router-link
         >
         <router-link
           v-bind:to="{ path: 'demos', hash: '#fullscreen' }"
-          v-on:click.native="scrollToHash('#fullscreen')"
+          v-on:click="scrollToHash('#fullscreen')"
         >
           Fullscreen On Mobile
         </router-link>
         <br />
         <router-link
           v-bind:to="{ path: 'demos', hash: '#mobileNoCloseButton' }"
-          v-on:click.native="scrollToHash('#mobileNoCloseButton')"
+          v-on:click="scrollToHash('#mobileNoCloseButton')"
         >
           Mobile No Close Button
         </router-link>
         <router-link
           v-bind:to="{ path: 'demos', hash: '#responsive' }"
-          v-on:click.native="scrollToHash('#responsive')"
+          v-on:click="scrollToHash('#responsive')"
         >
           Responsive Images
         </router-link>
         <router-link
-          v-bind:to="{ path: 'demos', hash: '#lazyload' }"
-          v-on:click.native="scrollToHash('#lazyload')"
-        >
-          With Vue-Lazyload
-        </router-link>
-        <router-link
-          v-bind:to="{ path: 'demos', hash: '#slick' }"
-          v-on:click.native="scrollToHash('#slick')"
-          >With Slick Carousel</router-link
+          v-bind:to="{ path: 'demos', hash: '#swiper' }"
+          v-on:click="scrollToHash('#swiper')"
+          >With Swiper Carousel</router-link
         >
       </span>
     </nav>
@@ -92,9 +86,7 @@
     <section id="withLoadingSpacer">
       <DemosDemo
         name="With Loading Spacer"
-        v-bind:code="
-          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :width=&quot;750&quot;\n  :height=&quot;500&quot;\n  :hasSpacer=&quot;true&quot;\n/>`
-        "
+        v-bind:code="`<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :width=&quot;750&quot;\n  :height=&quot;500&quot;\n  :hasSpacer=&quot;true&quot;\n/>`"
       >
         <template v-slot:notes>
           <li>Uses width and height props to generate image aspect ratio</li>
@@ -132,9 +124,7 @@
     <section id="dragToMove">
       <DemosDemo
         name="Drag To Move"
-        v-bind:code="
-          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  moveType=&quot;drag&quot;\n/>`
-        "
+        v-bind:code="`<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  moveType=&quot;drag&quot;\n/>`"
       >
         <template v-slot:notes>
           <li>Drag to explore zoomed image on non-touch devices</li>
@@ -169,9 +159,7 @@
     <section id="zoomOnHover">
       <DemosDemo
         name="Zoom On Hover"
-        v-bind:code="
-          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  zoomType=&quot;hover&quot;\n/>`
-        "
+        v-bind:code="`<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  zoomType=&quot;hover&quot;\n/>`"
       >
         <template v-slot:notes>
           <li>Trigger image zoom on hover</li>
@@ -206,9 +194,7 @@
     <section id="fullscreen">
       <DemosDemo
         name="Fullscreen On Mobile"
-        v-bind:code="
-          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :fullscreenOnMobile=&quot;true&quot;\n/>`
-        "
+        v-bind:code="`<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :fullscreenOnMobile=&quot;true&quot;\n/>`"
       >
         <template v-slot:notes>
           <li>Zoomed image is fullscreen on touch devices below a specified breakpoint</li>
@@ -243,9 +229,7 @@
     <section id="mobileNoCloseButton">
       <DemosDemo
         name="Mobile No Close Button"
-        v-bind:code="
-          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :hideCloseButton=&quot;true&quot;\n/>`
-        "
+        v-bind:code="`<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  :hideCloseButton=&quot;true&quot;\n/>`"
       >
         <template v-slot:notes>
           <li>Hides the close button on touch devices</li>
@@ -281,9 +265,7 @@
     <section id="responsive">
       <DemosDemo
         name="Responsive Images"
-        v-bind:code="
-          `<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  srcSet=&quot;/path/to/small-image.jpg, /path/to/small-image-2x.jpg 2x&quot;\n  :sources=&quot;[{ srcSet='/path/to/large-image.jpg, /path/to/large-image-2x.jpg 2x', media: '(min-width: 768px)' }]&quot;\n>`
-        "
+        v-bind:code="`<inner-image-zoom\n  src=&quot;/path/to/image.jpg&quot;\n  zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  srcSet=&quot;/path/to/small-image.jpg, /path/to/small-image-2x.jpg 2x&quot;\n  :sources=&quot;[{ srcSet='/path/to/large-image.jpg, /path/to/large-image-2x.jpg 2x', media: '(min-width: 768px)' }]&quot;\n>`"
       >
         <template v-slot:notes>
           <li>Accepts default srcset and sources (with srcset, media, type)</li>
@@ -331,58 +313,15 @@
       </DemosDemo>
     </section>
 
-    <section id="lazyload">
+    <section id="swiper">
       <DemosDemo
-        name="With Vue-Lazyload"
-        v-bind:code="
-          `<lazy-component>\n  <inner-image-zoom\n    src=&quot;/path/to/image.jpg&quot;\n    zoomSrc=&quot;/path/to/zoom-image.jpg&quot;\n  >\n<lazy-component>`
-        "
+        name="With Swiper Carousel"
+        v-bind:code="`<swiper>\n  <swiper-slide>\n    <inner-image-zoom\n      src=&quot;/path/to/image-1.jpg&quot;\n      zoomSrc=&quot;/path/to/zoom-image-2.jpg&quot;\n      :fullscreen=&quot;true&quot;\n    >\n  </swiper-slide>\n  <swiper-slide>\n    <inner-image-zoom\n      src=&quot;/path/to/image-2.jpg&quot;\n      zoomSrc=&quot;/path/to/zoom-image-2.jpg&quot;\n      :fullscreen=&quot;true&quot;\n    >\n  </swiper-slide>\n  <swiper-slide>\n    <inner-image-zoom\n      src=&quot;/path/to/image-3.jpg&quot;\n      zoomSrc=&quot;/path/to/zoom-image-3.jpg&quot;\n      :fullscreen=&quot;true&quot;\n    >\n  </swiper-slide>\n</swiper>`"
       >
         <template v-slot:notes>
           <li>
             Integration with
-            <a href="https://github.com/hilongjw/vue-lazyload" target="_blank">Vue-Lazyload</a>
-            (using lazy-component)
-          </li>
-          <li>
-            Photo credit:
-            <a
-              href="https://unsplash.com/@harrydona?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Harry Dona</a
-            >
-            on
-            <a
-              href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Unsplash</a
-            >
-          </li>
-        </template>
-
-        <template v-slot:example>
-          <lazy-component>
-            <InnerImageZoom src="assets/unsplash-6.jpg" zoomSrc="assets/unsplash-6-large.jpg" />
-          </lazy-component>
-        </template>
-      </DemosDemo>
-    </section>
-
-    <section id="slick">
-      <DemosDemo
-        name="With Slick Carousel"
-        v-bind:code="
-          `<vue-slick-carousel>\n  <inner-image-zoom\n    src=&quot;/path/to/image-1.jpg&quot;\n    zoomSrc=&quot;/path/to/zoom-image-2.jpg&quot;\n    :fullscreen=&quot;true&quot;\n  >\n  <inner-image-zoom\n    src=&quot;/path/to/image-2.jpg&quot;\n    zoomSrc=&quot;/path/to/zoom-image-2.jpg&quot;\n    :fullscreen=&quot;true&quot;\n  >\n  <inner-image-zoom\n    src=&quot;/path/to/image-3.jpg&quot;\n    zoomSrc=&quot;/path/to/zoom-image-3.jpg&quot;\n    :fullscreen=&quot;true&quot;\n  >\n</vue-slick-carousel>`
-        "
-      >
-        <template v-slot:notes>
-          <li>
-            Integration with
-            <a href="https://github.com/gs-shop/vue-slick-carousel" target="_blank"
-              >vue-slick-carousel</a
-            >
+            <a href="https://github.com/nolimits4web/swiper" target="_blank">Swiper</a>
           </li>
           <li>Recommend using with fullscreenOnMobile</li>
           <li>
@@ -416,23 +355,36 @@
         </template>
 
         <template v-slot:example>
-          <VueSlickCarousel :dots="true">
-            <InnerImageZoom
-              src="assets/unsplash-8.jpg"
-              zoomSrc="assets/unsplash-8-large.jpg"
-              :fullscreenOnMobile="true"
-            />
-            <InnerImageZoom
-              src="assets/unsplash-7.jpg"
-              zoomSrc="assets/unsplash-7-large.jpg"
-              :fullscreenOnMobile="true"
-            />
-            <InnerImageZoom
-              src="assets/unsplash-9.jpg"
-              zoomSrc="assets/unsplash-9-large.jpg"
-              :fullscreenOnMobile="true"
-            />
-          </VueSlickCarousel>
+          <swiper
+            :modules="modules"
+            loop
+            :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
+            :pagination="{ clickable: true }"
+          >
+            <swiper-slide>
+              <InnerImageZoom
+                src="assets/unsplash-8.jpg"
+                zoomSrc="assets/unsplash-8-large.jpg"
+                :fullscreenOnMobile="true"
+              />
+            </swiper-slide>
+            <swiper-slide>
+              <InnerImageZoom
+                src="assets/unsplash-7.jpg"
+                zoomSrc="assets/unsplash-7-large.jpg"
+                :fullscreenOnMobile="true"
+              />
+            </swiper-slide>
+            <swiper-slide>
+              <InnerImageZoom
+                src="assets/unsplash-9.jpg"
+                zoomSrc="assets/unsplash-9-large.jpg"
+                :fullscreenOnMobile="true"
+              />
+            </swiper-slide>
+          </swiper>
+          <button type="button" class="swiper-button-prev"></button>
+          <button type="button" class="swiper-button-next"></button>
         </template>
       </DemosDemo>
     </section>
@@ -440,37 +392,41 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import DemosDemo from '@/components/DemosDemo.vue';
 import InnerImageZoom from 'vue-inner-image-zoom';
-import VueLazyload from 'vue-lazyload';
-import VueSlickCarousel from 'vue-slick-carousel';
-import 'vue-slick-carousel/dist/vue-slick-carousel.css';
-import './slick-theme.css';
-
-Vue.use(VueLazyload, {
-  lazyComponent: true
-});
+import { Navigation, Pagination, A11y } from 'swiper';
+import { Swiper } from 'swiper/vue/swiper';
+import { SwiperSlide } from 'swiper/vue/swiper-slide';
+import 'swiper/swiper.min.css';
+import 'swiper/modules/navigation/navigation.min.css';
+import 'swiper/modules/pagination/pagination.min.css';
+import './swiper-theme.css';
 
 export default {
   name: 'Demos',
   components: {
     DemosDemo,
     InnerImageZoom,
-    VueSlickCarousel
+    Swiper,
+    SwiperSlide
   },
-  mounted: function() {
+  setup() {
+    return {
+      modules: [Navigation, Pagination, A11y]
+    };
+  },
+  mounted: function () {
     document.body.style.height = 'auto';
 
     if (this.$route.hash) {
       setTimeout(() => this.scrollToHash(this.$route.hash.replace('#', '')), 1);
     }
   },
-  destroyed: function() {
+  unmounted: function () {
     document.body.style.height = '100%';
   },
   methods: {
-    scrollToHash: function(hashbang) {
+    scrollToHash: function (hashbang) {
       window.scroll(0, document.getElementById(hashbang.replace('#', '')).offsetTop);
     }
   }

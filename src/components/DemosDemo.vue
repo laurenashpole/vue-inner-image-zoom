@@ -35,14 +35,8 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueClipboard from 'vue-clipboard2';
-
-VueClipboard.config.autoSetContainer = true;
-Vue.use(VueClipboard);
-
 export default {
-  name: 'Demos',
+  name: 'DemosDemo',
   props: {
     name: String,
     code: String
@@ -54,7 +48,7 @@ export default {
     };
   },
   computed: {
-    parsedName: function() {
+    parsedName: function () {
       return `${this.name.replace(/ /g, '')}Code`;
     }
   },
@@ -150,6 +144,7 @@ export default {
   color: #4b4b4b;
   line-height: 1.4em;
   overflow-x: auto;
+  overflow-y: hidden;
   position: relative;
   white-space: normal;
 }
@@ -209,16 +204,17 @@ export default {
 
   .demo__content {
     display: flex;
+    align-items: flex-start;
   }
 
   .demo__example {
-    width: 75%;
-    padding-right: 2em;
+    width: calc(75% - 2rem);
+    position: relative;
   }
 
   .demo__notes {
-    width: 25%;
-    padding-bottom: 6rem;
+    width: calc(25% + 2rem);
+    padding: 0 0 6rem 2rem;
     position: relative;
   }
 
@@ -232,7 +228,7 @@ export default {
 
   .demo__code-btn {
     position: absolute;
-    left: 0;
+    left: 2rem;
     bottom: 4rem;
   }
 
