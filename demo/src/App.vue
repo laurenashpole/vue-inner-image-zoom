@@ -12,12 +12,14 @@
         :zoomPreload="true"
       />
     </div>
-    <div style="margin-bottom: 30px;">
+    <button v-on:click="middleShown = true">show lazy loaded image</button>
+    <div style="margin-bottom: 30px;" v-show="middleShown">
       <h2>Drag Example</h2>
       <inner-image-zoom
         src="/assets/unsplash2.jpg"
         zoomSrc="/assets/unsplash2-large.jpg"
         moveType="drag"
+        loading="lazy"
         :fullscreenOnMobile="false"
         :width="750"
         :height="500"
@@ -46,6 +48,16 @@ export default {
   components: {
     InnerImageZoom
   },
-  props: ['srcs']
+  data() {
+    return {
+      middleShown: false
+    };
+  },
+  props: ['srcs'],
+  methods: {
+    showMiddle() {
+      this.middleShown = true;
+    }
+  }
 };
 </script>
