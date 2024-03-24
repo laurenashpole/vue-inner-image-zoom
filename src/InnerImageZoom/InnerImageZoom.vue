@@ -34,7 +34,10 @@
           />
           <img
             class="iiz__img"
-            v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
+            v-bind:class="{
+              'iiz__img--hidden': isZoomed,
+              'iiz__img--abs': createSpacer
+            }"
             v-bind:style="{
               transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
                 isZoomed ? fadeDuration : 0
@@ -51,7 +54,10 @@
       <template v-else>
         <img
           class="iiz__img"
-          v-bind:class="{ 'iiz__img--hidden': isZoomed, 'iiz__img--abs': createSpacer }"
+          v-bind:class="{
+            'iiz__img--hidden': isZoomed,
+            'iiz__img--abs': createSpacer
+          }"
           v-bind:style="{
             transition: `linear 0ms opacity ${isZoomed ? fadeDuration : 0}ms, linear 0ms visibility ${
               isZoomed ? fadeDuration : 0
