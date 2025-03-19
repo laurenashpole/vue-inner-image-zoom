@@ -75,6 +75,16 @@ describe('InnerImageZoom', () => {
         const wrapper = innerImageZoom({ hideHint: true });
         expect(wrapper.find('span').exists()).toEqual(false);
       });
+
+      it('does not render loading attribute', () => {
+        const wrapper = innerImageZoom();
+        expect(wrapper.find('img').attributes().loading).toEqual(undefined);
+      });
+
+      it('renders the original image tag with lazy loading', () => {
+        const wrapper = innerImageZoom({ loading: 'lazy' });
+        expect(wrapper.find('img').attributes().loading).toEqual('lazy');
+      });
     });
   });
 

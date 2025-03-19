@@ -44,6 +44,7 @@
             v-bind:srcSet="srcSet"
             v-bind:sizes="sizes"
             v-bind:alt="alt"
+            v-bind:loading="loading"
           />
         </picture>
       </template>
@@ -61,6 +62,7 @@
           v-bind:srcSet="srcSet"
           v-bind:sizes="sizes"
           v-bind:alt="alt"
+          v-bind:loading="loading"
         />
       </template>
     </div>
@@ -194,7 +196,8 @@ export default {
     hideCloseButton: Boolean,
     className: String,
     afterZoomIn: Function,
-    afterZoomOut: Function
+    afterZoomOut: Function,
+    loading: String
   },
   data() {
     return {
