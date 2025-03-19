@@ -5,18 +5,22 @@
       <router-view />
     </main>
     <app-footer />
+
+    <redirect />
   </div>
 </template>
 
 <script>
 import AppNav from '@/components/AppNav.vue';
 import AppFooter from '@/components/AppFooter.vue';
+import Redirect from './components/Redirect.vue';
 
 export default {
   name: 'App',
   components: {
     AppNav,
-    AppFooter
+    AppFooter,
+    Redirect
   }
 };
 </script>
@@ -40,7 +44,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   display: block;
 }
 
