@@ -71,7 +71,7 @@
           <div class="iiz__zoom-portal">
             <img
               class="iiz__zoom-img"
-              alt=""
+              v-bind:alt="alt"
               :draggable="false"
               v-bind:class="{ 'iiz__zoom-img--visible': isZoomed }"
               v-bind:style="{
