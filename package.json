@@ -3,18 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "./deploy.sh",
-    "start": "vue-cli-service serve"
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve"
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "swiper": "^7.3.1",
-    "vue": "^3.1.0",
-    "vue-inner-image-zoom": "^2.0.0",
-    "vue-router": "^4.0.12",
-    "vue3-clipboard": "^1.0.0"
+    "vue": "^3.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.15",
@@ -24,6 +20,7 @@
     "@vue/compiler-sfc": "^3.1.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-vue": "^8.1.1",

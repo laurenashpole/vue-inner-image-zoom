@@ -1,27 +1,17 @@
 <template>
   <div id="app">
-    <app-nav />
-    <main class="main">
-      <router-view />
+    <main className="main">
+      <h1>
+        Vue Inner Image Zoom<br />has moved to
+        <a href="https://innerimagezoom.com/">innerimagezoom.com</a>
+      </h1>
     </main>
-    <app-footer />
-
-    <redirect />
   </div>
 </template>
 
 <script>
-import AppNav from '@/components/AppNav.vue';
-import AppFooter from '@/components/AppFooter.vue';
-import Redirect from './components/Redirect.vue';
-
 export default {
-  name: 'App',
-  components: {
-    AppNav,
-    AppFooter,
-    Redirect
-  }
+  name: 'App'
 };
 </script>
 
@@ -35,7 +25,7 @@ export default {
 html {
   height: 100%;
   color: #373737;
-  font: 125% 'Mada', 'Helvetica', 'Arial', sans-serif;
+  font: 125% 'Frank Ruhl Libre', serif;
   font-weight: 300;
   scroll-behavior: smooth;
 }
@@ -44,21 +34,9 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   display: block;
-}
-
-body:before {
-  content: '';
   background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cstyle%3E.st0%7Bfill:none;stroke:%23e7e8eB;stroke-miterlimit:10%7D%3C/style%3E%3Cpath class='st0' d='M9.5 20h21M20 30.5v-21'/%3E%3C/svg%3E");
   background-size: 31px;
-  background-position: right bottom;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 70vw;
-  height: 60vh;
 }
 
 h2 {
@@ -76,30 +54,23 @@ a:focus {
   color: #2e815b;
 }
 
-#app {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-}
-
 @media (min-width: 1024px) {
-  h2 {
-    font-size: 3rem;
+  h1 {
+    font-size: 2.5rem;
   }
 }
 
 .main {
   width: 100%;
-  padding: 0.8rem;
-  flex-grow: 1;
+  padding: 1.5rem;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .main {
-    max-width: 1164px;
-    margin: 4rem auto;
-    padding: 0 1.6rem;
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 3rem;
   }
 }
 </style>
